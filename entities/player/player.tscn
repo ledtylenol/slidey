@@ -1,0 +1,287 @@
+[gd_scene format=3 uid="uid://b7p8r2rky365t"]
+
+[ext_resource type="Script" uid="uid://xgbhfj6degv2" path="res://entities/player/player.gd" id="1_abrql"]
+[ext_resource type="Script" uid="uid://b3rd7k1j0m6th" path="res://entities/player/jump_state.gd" id="2_bls4j"]
+[ext_resource type="Script" uid="uid://byshlqnjxjr46" path="res://entities/player/player_camera.gd" id="2_sglur"]
+[ext_resource type="Script" uid="uid://yxg2xbvke2bb" path="res://entities/player/mesh.gd" id="3_221hk"]
+[ext_resource type="Script" uid="uid://dftqo2odm2rkk" path="res://components/state_machine/state_machine.gd" id="4_bls4j"]
+[ext_resource type="Script" uid="uid://ci58u4pdehljw" path="res://entities/player/states/idle.gd" id="5_fkugw"]
+[ext_resource type="Script" uid="uid://cdj1tccn5r75l" path="res://entities/player/states/fall.gd" id="6_8fjmc"]
+[ext_resource type="Script" uid="uid://decokuot14jx4" path="res://entities/player/states/move.gd" id="7_qiwj3"]
+[ext_resource type="Script" uid="uid://bjpmu5sklv5h8" path="res://addons/raytraced_audio/raytraced_audio_listener.gd" id="8_26q78"]
+[ext_resource type="Script" uid="uid://b72satx0k4wls" path="res://entities/player/sounds.gd" id="9_7thud"]
+[ext_resource type="Script" uid="uid://dkb8ltjc6067n" path="res://addons/raytraced_audio/raytraced_audio_player_3d.gd" id="9_bectd"]
+[ext_resource type="Script" uid="uid://d26o2jsaseiaw" path="res://entities/player/states/drift.gd" id="9_we0b7"]
+[ext_resource type="AudioStream" uid="uid://c58qr83e2vvd" path="res://entities/player/sounds/foot.tres" id="9_wvtmh"]
+[ext_resource type="Script" uid="uid://bot4ypakil8g" path="res://entities/player/states/stop.gd" id="10_mtric"]
+[ext_resource type="Script" uid="uid://bb2gp81jpnp64" path="res://entities/player/winds.gd" id="12_a1qjk"]
+[ext_resource type="Curve" uid="uid://cn1mw4r6puydr" path="res://entities/player/sounds/lightwoosh.tres" id="13_b2kln"]
+[ext_resource type="AudioStream" uid="uid://b1na2k12noay2" path="res://entities/player/sounds/lightwoosh.mp3" id="13_j3ovn"]
+[ext_resource type="AudioStream" uid="uid://bd2pesfcjojbg" path="res://entities/player/sounds/mediumwoosh.mp3" id="14_afbqv"]
+[ext_resource type="Curve" uid="uid://du6cglfxh8vl1" path="res://entities/player/sounds/medwoosh.tres" id="14_we0b7"]
+[ext_resource type="AudioStream" uid="uid://dd172h8l6rpxb" path="res://entities/player/sounds/hardwoosh.mp3" id="15_gx6sm"]
+[ext_resource type="Curve" uid="uid://colwvj0ic5yek" path="res://entities/player/sounds/hardwoosh.tres" id="15_mtric"]
+[ext_resource type="AudioStream" uid="uid://bpt8o1sbcawnq" path="res://entities/player/sounds/Sound_Ideas,_SKID,_CARTOON_-_BENT_SKID.ogg" id="21_eyb6c"]
+[ext_resource type="AudioStream" uid="uid://dj5f5kl1mpydx" path="res://entities/player/sounds/impact.tres" id="23_ghoj8"]
+[ext_resource type="AudioStream" uid="uid://cjstm1ytfiix8" path="res://entities/player/sounds/light.tres" id="24_t1t22"]
+
+[sub_resource type="Resource" id="Resource_fkugw"]
+script = ExtResource("2_bls4j")
+jump_height = 5.0
+jump_peak_time = 0.4
+jump_descend_time = 0.45
+
+[sub_resource type="Curve" id="Curve_we0b7"]
+_limits = [0.0, 1.0, 0.0, 80.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(9.347827, 0.9586427), 0.014468935, 0.014468935, 0, 0, Vector2(50.434784, 0.607105), 0.0, 0.0, 0, 0, Vector2(80, 1), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t1t22"]
+transparency = 1
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_sfv1e"]
+material = SubResource("StandardMaterial3D_t1t22")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sfv1e"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_sfv1e"]
+
+[sub_resource type="Curve" id="Curve_221hk"]
+_limits = [1.0, 1.3832062, -101.5, 30.0]
+_data = [Vector2(-101.5, 1.3832062), 0.0, 0.0, 0, 0, Vector2(-73.76172, 1.3304235), -0.00606325, -0.00606325, 0, 0, Vector2(-60.406254, 1.1397543), -0.010266467, -0.010266467, 0, 0, Vector2(-46.36589, 1.0416468), -0.004897253, -0.004897253, 0, 0, Vector2(-23.197922, 1), 0.0, 0.0, 0, 0, Vector2(-5.1822968, 1.0598149), 0.005637614, 0.005637614, 0, 0, Vector2(30, 1.3304235), 0.008580766, 0.0, 0, 0]
+point_count = 7
+
+[sub_resource type="Curve" id="Curve_ghoj8"]
+_limits = [0.0, 1.0, 0.0, 80.0]
+_data = [Vector2(16.875, 0.1819942), 0.0, 0.0, 0, 0, Vector2(80, 0.0561471), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_t1t22"]
+_limits = [0.0, 143.37, 0.0, 80.0]
+_data = [Vector2(0, 143.37), 0.0, 0.0, 0, 0, Vector2(16.521738, 0.043147326), 0.0, 0.0, 0, 0, Vector2(80, 0.2609138), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_mtric"]
+_limits = [0.0, 100.0, 0.0, 1.0]
+_data = [Vector2(0.24305555, 0), 0.0, 0.0, 0, 0, Vector2(1, 18.678413), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_eyb6c"]
+curve = SubResource("Curve_mtric")
+
+[sub_resource type="Curve" id="Curve_eyb6c"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_221hk"]
+curve = SubResource("Curve_eyb6c")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_we0b7"]
+particle_flag_align_y = true
+emission_shape_offset = Vector3(0, 0.055, 0.265)
+emission_shape = 3
+emission_box_extents = Vector3(0.47, 0.095, 0.525)
+angle_min = -720.0
+angle_max = 720.0
+direction = Vector3(0, 0.675, 1)
+flatness = 0.687
+initial_velocity_min = 3.0
+initial_velocity_max = 5.0
+radial_accel_min = -23.190002
+radial_accel_max = -9.660002
+damping_min = 1.0
+damping_max = 1.0
+damping_curve = SubResource("CurveTexture_eyb6c")
+scale_min = 0.5
+scale_max = 0.78
+scale_curve = SubResource("CurveTexture_221hk")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_we0b7"]
+shading_mode = 2
+
+[sub_resource type="BoxMesh" id="BoxMesh_we0b7"]
+material = SubResource("StandardMaterial3D_we0b7")
+size = Vector3(0.25, 0.25, 0.25)
+
+[sub_resource type="Curve" id="Curve_7thud"]
+_limits = [0.0, 30.0, 0.0, 80.0]
+_data = [Vector2(0, 2.4906235), 0.0, 0.0, 0, 0, Vector2(50, 5.367932), 0.0, 0.0, 0, 0, Vector2(80, 30), 2.2373, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_50fht"]
+_limits = [0.5, 1.2, 0.0, 50.0]
+_data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(50, 0.8911985), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Player" type="CharacterBody3D" unique_id=845295137 node_paths=PackedStringArray("camera", "state_machine", "walk_particles", "mesh", "rot_node", "light", "light_sound")]
+collision_layer = 4
+script = ExtResource("1_abrql")
+jump_state = SubResource("Resource_fkugw")
+camera = NodePath("RotNode/RollNode/CameraArm/Camera")
+state_machine = NodePath("Components/StateMachine")
+walk_particles = NodePath("Components/GPUParticles3D")
+mesh = NodePath("Node3D/Mesh")
+rot_node = NodePath("PanNode")
+light = NodePath("OmniLight3D")
+light_sound = NodePath("Sounds/Light")
+max_ground_angle = 0.785
+particle_ratio_curve = SubResource("Curve_we0b7")
+
+[node name="Node3D" type="Node3D" parent="." unique_id=932722891]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Node3D" unique_id=1064027633 node_paths=PackedStringArray("player", "scale_root")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_sfv1e")
+script = ExtResource("3_221hk")
+player = NodePath("../..")
+scale_root = NodePath("..")
+
+[node name="SHape" type="CollisionShape3D" parent="." unique_id=259482628]
+shape = SubResource("CapsuleShape3D_sfv1e")
+
+[node name="RotNode" type="Node3D" parent="." unique_id=590449947]
+top_level = true
+
+[node name="RollNode" type="Node3D" parent="RotNode" unique_id=514414968]
+
+[node name="CameraArm" type="SpringArm3D" parent="RotNode/RollNode" unique_id=843800962]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1587491, 0)
+shape = SubResource("SphereShape3D_sfv1e")
+spring_length = 2.6
+
+[node name="Camera" type="Camera3D" parent="RotNode/RollNode/CameraArm" unique_id=1121983788 node_paths=PackedStringArray("pan_node", "roll_node", "arm", "rot_node", "player")]
+fov = 90.0
+script = ExtResource("2_sglur")
+pan_node = NodePath("../../../../PanNode")
+roll_node = NodePath("../..")
+arm = NodePath("..")
+rot_node = NodePath("../../..")
+player = NodePath("../../../..")
+zoom = 1.03
+
+[node name="RaytracedAudioListener" type="AudioListener3D" parent="RotNode/RollNode/CameraArm/Camera" unique_id=173598494]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.302, 0)
+script = ExtResource("8_26q78")
+muffle_enabled = false
+metadata/_custom_type_script = "uid://bjpmu5sklv5h8"
+
+[node name="PanNode" type="Node3D" parent="." unique_id=1544028546]
+
+[node name="Components" type="Node3D" parent="." unique_id=697138479]
+
+[node name="StateMachine" type="Node" parent="Components" unique_id=2097665541 node_paths=PackedStringArray("initial_state")]
+process_mode = 4
+script = ExtResource("4_bls4j")
+initial_state = NodePath("Idle")
+metadata/_custom_type_script = "uid://dftqo2odm2rkk"
+
+[node name="Idle" type="Node" parent="Components/StateMachine" unique_id=1117563899 node_paths=PackedStringArray("player")]
+script = ExtResource("5_fkugw")
+friction = 30.0
+player = NodePath("../../..")
+target_fov = 75.0
+metadata/_custom_type_script = "uid://ci58u4pdehljw"
+
+[node name="Fall" type="Node" parent="Components/StateMachine" unique_id=17624998 node_paths=PackedStringArray("mesh", "player")]
+script = ExtResource("6_8fjmc")
+mesh = NodePath("../../../Node3D/Mesh")
+scale_over_curve = SubResource("Curve_221hk")
+player = NodePath("../../..")
+target_fov = 75.0
+metadata/_custom_type_script = "uid://cdj1tccn5r75l"
+
+[node name="Move" type="Node" parent="Components/StateMachine" unique_id=1557384918 node_paths=PackedStringArray("player")]
+script = ExtResource("7_qiwj3")
+player = NodePath("../../..")
+metadata/_custom_type_script = "uid://decokuot14jx4"
+
+[node name="Drift" type="Node" parent="Components/StateMachine" unique_id=2003229580 node_paths=PackedStringArray("mesh", "player")]
+script = ExtResource("9_we0b7")
+accel = 25.0
+mesh = NodePath("../../../Node3D/Mesh")
+time_over_speed = SubResource("Curve_ghoj8")
+player = NodePath("../../..")
+target_fov = 105.0
+metadata/_custom_type_script = "uid://d26o2jsaseiaw"
+
+[node name="Stop" type="Node" parent="Components/StateMachine" unique_id=751906714 node_paths=PackedStringArray("skid", "mesh", "player")]
+script = ExtResource("10_mtric")
+friction = 50.0
+skid = NodePath("../../../Sounds/Skid")
+mesh = NodePath("../../../Node3D/Mesh")
+time_over_speed = SubResource("Curve_t1t22")
+player = NodePath("../../..")
+target_fov = 105.0
+metadata/_custom_type_script = "uid://bot4ypakil8g"
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Components" unique_id=32383277]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.85624063, 0)
+amount = 100
+lifetime = 1.5
+randomness = 0.11
+process_material = SubResource("ParticleProcessMaterial_we0b7")
+draw_pass_1 = SubResource("BoxMesh_we0b7")
+
+[node name="Sounds" type="Node3D" parent="." unique_id=755281305 node_paths=PackedStringArray("player", "footstep", "impact")]
+script = ExtResource("9_7thud")
+player = NodePath("..")
+d_to_sound_over_velocity = SubResource("Curve_7thud")
+footstep = NodePath("Slide")
+impact = NodePath("Fall")
+impact_over_velocity = SubResource("Curve_50fht")
+
+[node name="Slide" type="AudioStreamPlayer3D" parent="Sounds" unique_id=744881662]
+stream = ExtResource("9_wvtmh")
+volume_db = 8.353
+max_polyphony = 32
+script = ExtResource("9_bectd")
+metadata/_custom_type_script = "uid://dkb8ltjc6067n"
+
+[node name="Winds" type="Node3D" parent="Sounds" unique_id=187211755 node_paths=PackedStringArray("player")]
+script = ExtResource("12_a1qjk")
+player = NodePath("../..")
+light = ExtResource("13_b2kln")
+medium = ExtResource("14_we0b7")
+hard = ExtResource("15_mtric")
+
+[node name="LightWoosh" type="AudioStreamPlayer3D" parent="Sounds/Winds" unique_id=258018425]
+stream = ExtResource("13_j3ovn")
+script = ExtResource("9_bectd")
+metadata/_custom_type_script = "uid://dkb8ltjc6067n"
+
+[node name="MediumWoosh" type="AudioStreamPlayer3D" parent="Sounds/Winds" unique_id=1385071463]
+stream = ExtResource("14_afbqv")
+script = ExtResource("9_bectd")
+metadata/_custom_type_script = "uid://dkb8ltjc6067n"
+
+[node name="HardWoosh" type="AudioStreamPlayer3D" parent="Sounds/Winds" unique_id=1119691567]
+stream = ExtResource("15_gx6sm")
+script = ExtResource("9_bectd")
+metadata/_custom_type_script = "uid://dkb8ltjc6067n"
+
+[node name="Skid" type="AudioStreamPlayer3D" parent="Sounds" unique_id=73774643]
+stream = ExtResource("21_eyb6c")
+volume_db = -9.275
+script = ExtResource("9_bectd")
+metadata/_custom_type_script = "uid://dkb8ltjc6067n"
+
+[node name="Fall" type="AudioStreamPlayer3D" parent="Sounds" unique_id=912666715]
+stream = ExtResource("23_ghoj8")
+volume_db = -6.432
+pitch_scale = 1.86
+max_polyphony = 30
+script = ExtResource("9_bectd")
+metadata/_custom_type_script = "uid://dkb8ltjc6067n"
+
+[node name="Light" type="AudioStreamPlayer3D" parent="Sounds" unique_id=1471468286]
+stream = ExtResource("24_t1t22")
+volume_db = 6.432
+unit_size = 23.45
+script = ExtResource("9_bectd")
+metadata/_custom_type_script = "uid://dkb8ltjc6067n"
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=1942586603]
+visible = false
+light_energy = 3.819
+omni_range = 7.756815

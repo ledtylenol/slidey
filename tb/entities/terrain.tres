@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="FuncGodotFGDSolidClass" format=3 uid="uid://ice446x16pi6"]
+
+[ext_resource type="Script" uid="uid://5cow84q03m6a" path="res://addons/func_godot/src/fgd/func_godot_fgd_solid_class.gd" id="1_gk0rt"]
+[ext_resource type="Script" uid="uid://cl0uvnlpnir0m" path="res://components/terrain.gd" id="2_jp27p"]
+
+[resource]
+script = ExtResource("1_gk0rt")
+build_occlusion = true
+script_class = ExtResource("2_jp27p")
+classname = "slide_terrain"
+class_properties = Dictionary[String, Variant]({
+"max_angle": 0.0,
+"override_max_angle": false,
+"override_up": false,
+"sound": ""
+})
+node_class = "Terrain"
+metadata/_custom_type_script = "uid://5cow84q03m6a"

@@ -1,0 +1,11 @@
+[gd_resource type="AudioStreamRandomizer" format=3 uid="uid://cjstm1ytfiix8"]
+
+[ext_resource type="AudioStream" uid="uid://1ddayq1ffxs1" path="res://entities/player/sounds/in.wav" id="1_dd6sk"]
+[ext_resource type="AudioStream" uid="uid://c2qudpii7sqae" path="res://entities/player/sounds/in2.wav" id="2_hdu1a"]
+
+[resource]
+playback_mode = 1
+random_pitch = 1.2486911
+streams_count = 2
+stream_0/stream = ExtResource("1_dd6sk")
+stream_1/stream = ExtResource("2_hdu1a")

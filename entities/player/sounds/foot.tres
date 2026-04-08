@@ -1,0 +1,10 @@
+[gd_resource type="AudioStreamRandomizer" format=3 uid="uid://c58qr83e2vvd"]
+
+[ext_resource type="AudioStream" uid="uid://cm0aefsdxs2dg" path="res://entities/player/sounds/footstep_concrete_000.ogg" id="1_gucq2"]
+[ext_resource type="AudioStream" uid="uid://htsl4xk3bcq6" path="res://entities/player/sounds/footstep_concrete_002.ogg" id="2_2dr3h"]
+
+[resource]
+random_pitch = 1.428004
+streams_count = 2
+stream_0/stream = ExtResource("1_gucq2")
+stream_1/stream = ExtResource("2_2dr3h")

@@ -1,0 +1,152 @@
+[gd_scene format=3 uid="uid://7icgpbiglhj4"]
+
+[ext_resource type="Script" uid="uid://ddep7kn5c2ys" path="res://world.gd" id="1_aqk2v"]
+[ext_resource type="Script" uid="uid://tkw7vhllq1en" path="res://ui.gd" id="1_f3sb7"]
+[ext_resource type="Theme" uid="uid://bhbf8f1vtd2pp" path="res://special/theme.tres" id="1_fj7yv"]
+[ext_resource type="PackedScene" uid="uid://b7p8r2rky365t" path="res://entities/player/player.tscn" id="1_tlwt5"]
+[ext_resource type="PackedScene" uid="uid://cgt7tfmdhprwk" path="res://levels/level1/level.tscn" id="3_036b0"]
+[ext_resource type="Sky" uid="uid://dh223pfwllj35" path="res://special/NightSkyHDRI003_1K.tres" id="3_pkg7o"]
+[ext_resource type="AudioStream" uid="uid://dd172h8l6rpxb" path="res://entities/player/sounds/hardwoosh.mp3" id="4_dwbse"]
+[ext_resource type="Script" uid="uid://cv7erkggx0n7o" path="res://special/coin_manager.gd" id="8_gbfbk"]
+
+[sub_resource type="Curve" id="Curve_dwbse"]
+_limits = [0.5, 2.0, 0.0, 1.0]
+_data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(0.64843756, 1.3959343), 4.439404, 0.0, 0, 0, Vector2(1, 0.5), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_pkg7o"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.6432292, 1), 4.6642, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_gbfbk"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.6432292, 0.6098742), 2.2388163, 3.687979, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Environment" id="Environment_036b0"]
+background_mode = 2
+sky = ExtResource("3_pkg7o")
+ambient_light_source = 1
+reflected_light_source = 2
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Game" type="Node" unique_id=490218917 node_paths=PackedStringArray("world_3d", "ui", "player", "sun", "environment", "woosh")]
+script = ExtResource("1_aqk2v")
+world_3d = NodePath("World")
+ui = NodePath("UI")
+player = NodePath("World/Player")
+sun = NodePath("World/DirectionalLight3D")
+environment = NodePath("World/WorldEnvironment")
+pitch_over_v = SubResource("Curve_dwbse")
+vol_over_v = SubResource("Curve_pkg7o")
+v_over_v = SubResource("Curve_gbfbk")
+woosh = NodePath("World/Woosh")
+
+[node name="World" type="Node3D" parent="." unique_id=1046924746]
+unique_name_in_owner = true
+
+[node name="Player" parent="World" unique_id=845295137 instance=ExtResource("1_tlwt5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="World" unique_id=1296538748]
+environment = SubResource("Environment_036b0")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World" unique_id=937621591]
+transform = Transform3D(0.67574465, -0.6691283, -0.30925146, 0.6909041, 0.42869276, 0.58212894, -0.2569451, -0.6070336, 0.75199026, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_mode = 0
+
+[node name="Level" parent="World" unique_id=1036663807 instance=ExtResource("3_036b0")]
+
+[node name="Woosh" type="AudioStreamPlayer" parent="World" unique_id=1458501079]
+stream = ExtResource("4_dwbse")
+bus = &"RaytracedAmbient"
+
+[node name="UI" type="Control" parent="." unique_id=1244635623]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_fj7yv")
+script = ExtResource("1_f3sb7")
+
+[node name="TabContainer" type="TabContainer" parent="UI" unique_id=908940474]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+current_tab = 0
+
+[node name="Settings" type="MarginContainer" parent="UI/TabContainer" unique_id=1617367615]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+metadata/_tab_index = 0
+
+[node name="Settings" type="TabContainer" parent="UI/TabContainer/Settings" unique_id=1092635142]
+layout_mode = 2
+current_tab = 0
+
+[node name="Audio2" type="MarginContainer" parent="UI/TabContainer/Settings/Settings" unique_id=1078796614]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+metadata/_tab_index = 0
+
+[node name="Video" type="VBoxContainer" parent="UI/TabContainer/Settings/Settings/Audio2" unique_id=1595732566]
+visible = false
+layout_mode = 2
+
+[node name="Audio2" type="PanelContainer" parent="UI/TabContainer/Settings/Settings/Audio2" unique_id=945517504]
+layout_mode = 2
+
+[node name="Audio" type="VBoxContainer" parent="UI/TabContainer/Settings/Settings/Audio2/Audio2" unique_id=333647781]
+layout_mode = 2
+
+[node name="SplitContainer" type="HBoxContainer" parent="UI/TabContainer/Settings/Settings/Audio2/Audio2/Audio" unique_id=2105992139]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/TabContainer/Settings/Settings/Audio2/Audio2/Audio/SplitContainer" unique_id=460573763]
+layout_mode = 2
+text = "SFX:"
+
+[node name="HSlider" type="HSlider" parent="UI/TabContainer/Settings/Settings/Audio2/Audio2/Audio/SplitContainer" unique_id=1756286187]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+
+[node name="VSeparator" type="VSeparator" parent="UI/TabContainer/Settings/Settings/Audio2/Audio2/Audio/SplitContainer" unique_id=413924911]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.68
+
+[node name="SplitContainer2" type="HBoxContainer" parent="UI/TabContainer/Settings/Settings/Audio2/Audio2/Audio" unique_id=427445246]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/TabContainer/Settings/Settings/Audio2/Audio2/Audio/SplitContainer2" unique_id=1351308537]
+layout_mode = 2
+text = "Volume: "
+
+[node name="HSlider" type="HSlider" parent="UI/TabContainer/Settings/Settings/Audio2/Audio2/Audio/SplitContainer2" unique_id=875769246]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+
+[node name="VSeparator" type="VSeparator" parent="UI/TabContainer/Settings/Settings/Audio2/Audio2/Audio/SplitContainer2" unique_id=277161635]
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="CoinManager" type="Node" parent="." unique_id=1190794270]
+script = ExtResource("8_gbfbk")

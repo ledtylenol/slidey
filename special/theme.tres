@@ -1,0 +1,67 @@
+[gd_resource type="Theme" format=3 uid="uid://bhbf8f1vtd2pp"]
+
+[ext_resource type="FontFile" uid="uid://dcm8j4d1ycaty" path="res://special/fonts/MNVariaWIP-Semi-bold.ttf" id="1_xhunf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xhunf"]
+bg_color = Color(0.1314, 0.16704, 0.18, 1)
+draw_center = false
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.10980392, 0.10980392, 0.10980392, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_da7w8"]
+draw_center = false
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.10980392, 0.10980392, 0.10980392, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xhunf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_da7w8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s815h"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qcf0o"]
+bg_color = Color(0.14406255, 0.14406255, 0.14406249, 1)
+skew = Vector2(0.27, 0)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.10980392, 0.10980392, 0.10980392, 1)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_puuck"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b2rrg"]
+
+[resource]
+default_font = ExtResource("1_xhunf")
+MarginContainer/constants/margin_bottom = 0
+MarginContainer/constants/margin_left = 0
+MarginContainer/constants/margin_right = 0
+MarginContainer/constants/margin_top = 0
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_xhunf")
+TabContainer/styles/panel = SubResource("StyleBoxFlat_da7w8")
+TabContainer/styles/tab_disabled = SubResource("StyleBoxEmpty_xhunf")
+TabContainer/styles/tab_focus = SubResource("StyleBoxEmpty_da7w8")
+TabContainer/styles/tab_hovered = SubResource("StyleBoxEmpty_s815h")
+TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_qcf0o")
+TabContainer/styles/tab_unselected = SubResource("StyleBoxEmpty_puuck")
+TabContainer/styles/tabbar_background = SubResource("StyleBoxEmpty_b2rrg")

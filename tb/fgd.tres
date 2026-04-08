@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FuncGodotFGDFile" format=3 uid="uid://bsydrs1o6wdhe"]
+
+[ext_resource type="Script" uid="uid://drlmgulwbjwqu" path="res://addons/func_godot/src/fgd/func_godot_fgd_file.gd" id="1_6k5s6"]
+[ext_resource type="Resource" uid="uid://crgpdahjaj" path="res://addons/func_godot/fgd/func_godot_fgd.tres" id="1_vq2r8"]
+[ext_resource type="Resource" uid="uid://ijma5xj2jman" path="res://tb/entities/respawn.tres" id="2_s83gc"]
+[ext_resource type="Resource" uid="uid://ice446x16pi6" path="res://tb/entities/terrain.tres" id="3_mu3xs"]
+
+[resource]
+script = ExtResource("1_6k5s6")
+fgd_name = "Slide"
+base_fgd_files = Array[Resource]([ExtResource("1_vq2r8")])
+entity_definitions = Array[Resource]([ExtResource("2_s83gc"), ExtResource("3_mu3xs")])
+metadata/_custom_type_script = "uid://drlmgulwbjwqu"

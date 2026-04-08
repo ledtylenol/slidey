@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://cso6ftafnp3fo"]
+
+[ext_resource type="PackedScene" uid="uid://biaslb3dl8cb1" path="res://entities/respawn/marble_venus_de_milo_statue.glb" id="1_5t7h4"]
+[ext_resource type="Script" uid="uid://b6tg0r1hy5vpl" path="res://entities/respawn/respawn.gd" id="1_rn853"]
+[ext_resource type="Script" uid="uid://c4t3ypbomgddh" path="res://addons/shaker/src/Vector3/shaker_component3D.gd" id="2_ynxhe"]
+[ext_resource type="Script" uid="uid://cs5eei32bg46a" path="res://addons/shaker/data/Vector3/BaseShakerType3D.gd" id="3_dtt77"]
+[ext_resource type="Script" uid="uid://bbkmbsvifakc3" path="res://addons/shaker/data/Vector3/ShakerTypeBrownianShake3D.gd" id="4_0p13f"]
+[ext_resource type="Script" uid="uid://tah42ld02qfu" path="res://addons/shaker/data/Vector3/ShakerPreset3D.gd" id="5_rn853"]
+[ext_resource type="AudioStream" uid="uid://ddq4y1pwx7h14" path="res://entities/respawn/haircuts for men - Tony Was the Devil トニーは悪魔でした.ogg" id="6_0p13f"]
+[ext_resource type="Script" uid="uid://dkb8ltjc6067n" path="res://addons/raytraced_audio/raytraced_audio_player_3d.gd" id="6_dtt77"]
+[ext_resource type="AudioStream" uid="uid://dwc3ni7qrjhrx" path="res://entities/respawn/bong_001.ogg" id="9_nft4m"]
+
+[sub_resource type="Resource" id="Resource_nft4m"]
+script = ExtResource("4_0p13f")
+persistence = Vector3(0, 0, 0)
+amplitude = Vector3(0.885, 0.4, 0.4)
+metadata/_custom_type_script = "uid://bbkmbsvifakc3"
+
+[sub_resource type="Resource" id="Resource_kwutr"]
+script = ExtResource("5_rn853")
+PositionShake = Array[ExtResource("3_dtt77")]([SubResource("Resource_nft4m")])
+metadata/_custom_type_script = "uid://tah42ld02qfu"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0p13f"]
+size = Vector3(5.38, 11.524, 5.505)
+
+[node name="Respawn" type="Node3D" unique_id=1816026833]
+script = ExtResource("1_rn853")
+
+[node name="marble_venus_de_milo_statue" parent="." unique_id=1413201886 instance=ExtResource("1_5t7h4")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 0, 0, 0)
+
+[node name="ShakerComponent3D" type="Node3D" parent="." unique_id=765941701 node_paths=PackedStringArray("Targets")]
+script = ExtResource("2_ynxhe")
+custom_target = true
+Targets = [NodePath("../marble_venus_de_milo_statue")]
+randomize = true
+AutoPlay = true
+shakerPreset = SubResource("Resource_kwutr")
+metadata/_custom_type_script = "uid://c4t3ypbomgddh"
+
+[node name="RespawnSong" type="AudioStreamPlayer3D" parent="." unique_id=72821614]
+stream = ExtResource("6_0p13f")
+unit_size = 21.58
+script = ExtResource("6_dtt77")
+metadata/_custom_type_script = "uid://dkb8ltjc6067n"
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1635661386]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=1331005033]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.820877, 0)
+shape = SubResource("BoxShape3D_0p13f")
+
+[node name="Pop" type="AudioStreamPlayer3D" parent="." unique_id=1699462289]
+stream = ExtResource("9_nft4m")
+volume_db = 8.04
+pitch_scale = 1.72
+script = ExtResource("6_dtt77")
+metadata/_custom_type_script = "uid://dkb8ltjc6067n"
+
+[editable path="marble_venus_de_milo_statue"]

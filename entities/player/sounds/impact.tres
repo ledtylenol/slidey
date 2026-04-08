@@ -1,0 +1,16 @@
+[gd_resource type="AudioStreamRandomizer" format=3 uid="uid://dj5f5kl1mpydx"]
+
+[ext_resource type="AudioStream" uid="uid://cw88qdngl0aqj" path="res://entities/player/sounds/impactPlank_medium_000.ogg" id="1_ekscp"]
+[ext_resource type="AudioStream" uid="uid://dd6uijg58sbuy" path="res://entities/player/sounds/impactPlank_medium_001.ogg" id="2_k517j"]
+[ext_resource type="AudioStream" uid="uid://drevw1dux4wd2" path="res://entities/player/sounds/impactPlank_medium_002.ogg" id="3_uf6hk"]
+[ext_resource type="AudioStream" uid="uid://bgn0mxdimrqtf" path="res://entities/player/sounds/impactPlank_medium_003.ogg" id="4_widql"]
+[ext_resource type="AudioStream" uid="uid://djch2qt6agom3" path="res://entities/player/sounds/impactPlank_medium_004.ogg" id="5_g0b6g"]
+
+[resource]
+random_pitch = 1.1540188
+streams_count = 5
+stream_0/stream = ExtResource("1_ekscp")
+stream_1/stream = ExtResource("2_k517j")
+stream_2/stream = ExtResource("3_uf6hk")
+stream_3/stream = ExtResource("4_widql")
+stream_4/stream = ExtResource("5_g0b6g")
