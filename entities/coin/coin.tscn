@@ -19,10 +19,10 @@ collision_mask = 4
 script = ExtResource("1_ciy41")
 pitch_over_heat = SubResource("Curve_sogop")
 
-[node name="Sketchfab_Scene" parent="." unique_id=163839772 instance=ExtResource("1_h1msn")]
+[node name="Sketchfab_Scene" parent="." unique_id=830117128 instance=ExtResource("1_h1msn")]
 transform = Transform3D(10.672534, 0, 0, 0, 10.672534, 0, 0, 0, 10.672534, 0, 0, 0)
 
-[node name="Object_2" parent="Sketchfab_Scene/Sketchfab_model/Coin_obj_cleaner_materialmerger_gles" parent_id_path=PackedInt32Array(163839772, 1990513718) index="0" unique_id=414474740]
+[node name="Object_2" parent="Sketchfab_Scene/Sketchfab_model/Coin_obj_cleaner_materialmerger_gles" parent_id_path=PackedInt32Array(830117128, 471851575) index="0" unique_id=579100583]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.155)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2099467008]

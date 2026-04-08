@@ -20,6 +20,7 @@ var last_id := 0
 var tween: Tween
 var rotations: Array[Rotation] = []
 signal reset
+signal just_reset
 class Rotation:
 	var start_rot := Quaternion.IDENTITY
 	var end_rot := Quaternion.IDENTITY
@@ -37,6 +38,7 @@ class Rotation:
 func _ready() -> void:
 	spawnpoint = player.transform
 func on_die() -> void:
+	just_reset.emit()
 	player.transform = spawnpoint
 	player.velocity = Vector3.ZERO
 	player.up = spawnpoint.basis.y
@@ -61,6 +63,19 @@ func r_sun(v: float) -> void:
 	woosh.pitch_scale = pitch_over_v.sample(v)
 	sun.quaternion =  start_rot.slerp(end_rot, vv)
 	environment.environment.sky_rotation = eq.get_euler()
+
+func _input(event: InputEvent) -> void:
+	if event.is_pressed():
+		if event.is_action("restart"):
+			on_die()
+		if event.is_action("swap_fps"):
+			#TODO godot 4.7 adds nearest viewport scaling!!
+			if Engine.max_fps == 0:
+				Engine.max_fps = 260
+				get_window().scaling_3d_scale = 1.0
+			else:
+				Engine.max_fps = 0
+				get_window().scaling_3d_scale = 0.5
 func invert_rotations() -> void:
 	if rotations.is_empty():
 		reset.emit(last_id)

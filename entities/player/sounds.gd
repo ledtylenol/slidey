@@ -7,9 +7,14 @@ var d_travelled := 0.0
 
 @export var footstep: RaytracedAudioPlayer3D
 @export var impact: RaytracedAudioPlayer3D
+@export var jump: RaytracedAudioPlayer3D
+@export var boom: RaytracedAudioPlayer3D
 @export var impact_over_velocity: Curve
 func _ready() -> void:
 	player.landed.connect(land)
+	player.just_jumped.connect(jump.play)
+	get_tree().current_scene.just_reset.connect(play_reset)
+
 func _physics_process(delta: float) -> void:
 	if not player.grounded: return
 	var pl := player.velocity.slide(player.up).length()
@@ -26,3 +31,6 @@ func land(vel: Vector3) -> void:
 	if spd < 10.0: return
 	impact.volume_linear = impact_over_velocity.sample(spd)
 	impact.play()
+
+func play_reset() -> void:
+	boom.play()

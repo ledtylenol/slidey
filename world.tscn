@@ -45,6 +45,12 @@ woosh = NodePath("World/Woosh")
 [node name="World" type="Node3D" parent="." unique_id=1046924746]
 unique_name_in_owner = true
 
+[node name="Level" parent="World" unique_id=1036663807 instance=ExtResource("3_036b0")]
+
+[node name="Woosh" type="AudioStreamPlayer" parent="World" unique_id=1458501079]
+stream = ExtResource("4_dwbse")
+bus = &"RaytracedAmbient"
+
 [node name="Player" parent="World" unique_id=845295137 instance=ExtResource("1_tlwt5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
@@ -52,29 +58,42 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 environment = SubResource("Environment_036b0")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="World" unique_id=937621591]
-transform = Transform3D(0.67574465, -0.6691283, -0.30925146, 0.6909041, 0.42869276, 0.58212894, -0.2569451, -0.6070336, 0.75199026, 0, 0, 0)
+transform = Transform3D(0.67574465, -0.66912836, -0.30925152, 0.6909041, 0.4286928, 0.58212894, -0.2569451, -0.60703367, 0.7519903, 0, 0, 0)
 shadow_enabled = true
 directional_shadow_mode = 0
 
-[node name="Level" parent="World" unique_id=1036663807 instance=ExtResource("3_036b0")]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="World" unique_id=32922922]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+stretch_shrink = 2
 
-[node name="Woosh" type="AudioStreamPlayer" parent="World" unique_id=1458501079]
-stream = ExtResource("4_dwbse")
-bus = &"RaytracedAmbient"
+[node name="SubViewport" type="SubViewport" parent="World/SubViewportContainer" unique_id=1564980922]
+handle_input_locally = false
+msaa_3d = 2
+use_occlusion_culling = true
+audio_listener_enable_3d = true
+size = Vector2i(640, 360)
+render_target_update_mode = 0
 
 [node name="UI" type="Control" parent="." unique_id=1244635623]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme = ExtResource("1_fj7yv")
 script = ExtResource("1_f3sb7")
 
 [node name="TabContainer" type="TabContainer" parent="UI" unique_id=908940474]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -147,6 +166,11 @@ step = 0.01
 [node name="VSeparator" type="VSeparator" parent="UI/TabContainer/Settings/Settings/Audio2/Audio2/Audio/SplitContainer2" unique_id=277161635]
 layout_mode = 2
 size_flags_horizontal = 2
+
+[node name="FPS Label" type="Label" parent="UI" unique_id=47087975]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 17.0
 
 [node name="CoinManager" type="Node" parent="." unique_id=1190794270]
 script = ExtResource("8_gbfbk")

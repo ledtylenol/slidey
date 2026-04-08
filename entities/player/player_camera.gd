@@ -18,7 +18,7 @@ var real_zoom := zoom
 var target_fov := 90.0:
 	set = set_target_fov
 var tween: Tween
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if Engine.is_editor_hint(): return
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		pan_node.rotate_object_local(Vector3.UP, - event.relative.x * sensitivity / 4000.0)

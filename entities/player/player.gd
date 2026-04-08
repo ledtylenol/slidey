@@ -47,8 +47,7 @@ signal landed()
 signal left_ground()
 signal started_moving()
 signal stopped_moving()
-
-
+signal just_jumped()
 class StepResult:
 	var diff_position: Vector3 = Vector3.ZERO
 	var normal: Vector3 = Vector3.ZERO
@@ -219,6 +218,7 @@ func jump() -> void:
 	if jumped or not Input.is_action_just_pressed("jump"): return
 	velocity = velocity.slide(up) + up * jump_state.jump_velocity
 	jumped = true
+	just_jumped.emit()
 func check_grounded(delta: float) -> void:
 	var col = KinematicCollision3D.new()
 	var is_colliding := test_move(transform, (velocity - up) * delta, col, 0.001, true)
@@ -228,18 +228,22 @@ func check_grounded(delta: float) -> void:
 		var terrain := col.get_collider() as Terrain
 		if terrain:
 			current_terrain = terrain
-			if new_up.angle_to(up) < max_ground_angle or terrain.override_max_angle and new_up.angle_to(up) < terrain.max_angle:
+			if new_up.angle_to(up) < get_max_angle():
 				grounded = true
 				up = new_up
 				if terrain.override_up:
 					current_up = new_up
 				return
-		elif new_up.angle_to(up) < max_ground_angle:
+		elif new_up.angle_to(up) < get_max_angle():
 			grounded = true
 			up = new_up
 			current_terrain = null
 			current_up = Vector3.ZERO
 			return
+		else:
+			grounded = false
+			current_terrain = null
+			current_up = Vector3.ZERO
 	else:
 		grounded = false
 func check_inputs() -> void:

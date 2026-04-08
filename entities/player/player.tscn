@@ -24,6 +24,7 @@
 [ext_resource type="AudioStream" uid="uid://bpt8o1sbcawnq" path="res://entities/player/sounds/Sound_Ideas,_SKID,_CARTOON_-_BENT_SKID.ogg" id="21_eyb6c"]
 [ext_resource type="AudioStream" uid="uid://dj5f5kl1mpydx" path="res://entities/player/sounds/impact.tres" id="23_ghoj8"]
 [ext_resource type="AudioStream" uid="uid://cjstm1ytfiix8" path="res://entities/player/sounds/light.tres" id="24_t1t22"]
+[ext_resource type="AudioStream" uid="uid://gj1t2ptcj4w7" path="res://special/boom.wav" id="25_50fht"]
 
 [sub_resource type="Resource" id="Resource_fkugw"]
 script = ExtResource("2_bls4j")
@@ -223,12 +224,14 @@ randomness = 0.11
 process_material = SubResource("ParticleProcessMaterial_we0b7")
 draw_pass_1 = SubResource("BoxMesh_we0b7")
 
-[node name="Sounds" type="Node3D" parent="." unique_id=755281305 node_paths=PackedStringArray("player", "footstep", "impact")]
+[node name="Sounds" type="Node3D" parent="." unique_id=755281305 node_paths=PackedStringArray("player", "footstep", "impact", "jump", "boom")]
 script = ExtResource("9_7thud")
 player = NodePath("..")
 d_to_sound_over_velocity = SubResource("Curve_7thud")
 footstep = NodePath("Slide")
 impact = NodePath("Fall")
+jump = NodePath("Jump")
+boom = NodePath("Boom")
 impact_over_velocity = SubResource("Curve_50fht")
 
 [node name="Slide" type="AudioStreamPlayer3D" parent="Sounds" unique_id=744881662]
@@ -274,10 +277,25 @@ max_polyphony = 30
 script = ExtResource("9_bectd")
 metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 
+[node name="Jump" type="AudioStreamPlayer3D" parent="Sounds" unique_id=2053541785]
+stream = ExtResource("23_ghoj8")
+volume_db = -6.432
+pitch_scale = 1.09
+max_polyphony = 30
+script = ExtResource("9_bectd")
+metadata/_custom_type_script = "uid://dkb8ltjc6067n"
+
 [node name="Light" type="AudioStreamPlayer3D" parent="Sounds" unique_id=1471468286]
 stream = ExtResource("24_t1t22")
 volume_db = 6.432
 unit_size = 23.45
+script = ExtResource("9_bectd")
+metadata/_custom_type_script = "uid://dkb8ltjc6067n"
+
+[node name="Boom" type="AudioStreamPlayer3D" parent="Sounds" unique_id=504564816]
+stream = ExtResource("25_50fht")
+volume_db = -8.377
+unit_size = 23.6
 script = ExtResource("9_bectd")
 metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 

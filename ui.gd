@@ -1,5 +1,6 @@
 extends Control
 class_name UI
+@onready var fps_label: Label = $"FPS Label"
 
 var current_menu: Node = null:
 	set = set_current_menu
@@ -20,3 +21,5 @@ func _input(event: InputEvent) -> void:
 		match Input.mouse_mode:
 			Input.MOUSE_MODE_CAPTURED: Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			Input.MOUSE_MODE_VISIBLE: Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+func _process(delta: float) -> void:
+	fps_label.text = "%s" % Engine.get_frames_per_second()

@@ -5,6 +5,7 @@ var tween: Tween
 @export var scale_root: Node3D
 func _ready() -> void:
 	player.landed.connect(on_landing)
+	get_tree().current_scene.just_reset.connect(tween_reset)
 func on_landing(vel: Vector3) -> void:
 	var spd := vel.dot(-player.up)
 	if spd < 10.0: return
@@ -29,3 +30,10 @@ func reset_size() -> void:
 		tween.kill()
 	tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	tween.tween_property(scale_root, "scale", Vector3.ONE, 1.1)
+
+func tween_reset() -> void:
+	if tween:
+		tween.kill()
+	tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+	var r := randf_range(0.4, 1.5)
+	tween.tween_property(scale_root, "scale", Vector3.ONE, 1.1).from(Vector3(r, 1 / r, r))
