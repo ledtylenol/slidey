@@ -16,6 +16,8 @@ const SPEED_CLAMP_SLOPE_STEP_UP_COEFFICIENT = 0.4
 @export var state_machine: StateMachine
 @export var walk_particles: GPUParticles3D
 @export var mesh: MeshInstance3D
+@onready var rotation_root: Node3D = $Node3D/RotationRoot
+
 @export var rot_node: Node3D
 @export var light: OmniLight3D
 @export var light_sound: RaytracedAudioPlayer3D
@@ -23,8 +25,22 @@ const SPEED_CLAMP_SLOPE_STEP_UP_COEFFICIENT = 0.4
 @export var delta_iterations := 5
 @export var max_ground_angle := PI/5
 @export var particle_ratio_curve: Curve
-
+@export var snap_height := 0.085
+@export var max_down_vel := 200.0
+@export_group("Move Params")
+@export_subgroup("Standard Params")
+@export var move_speed := 50.0
+@export var move_accel := 50.0
+@export var min_drift_speed := 45.0
+@export_subgroup("Drift Params")
+@export var drift_speed := 80.0
+@export var drift_accel := 25.0
+@export var drift_friction := 2.0
+@export_subgroup("Stop Params")
+@export var stop_friction := 100.0
+@export var stop_friction_over := 200.0
 var up := Vector3.UP
+var old_up := Vector3.UP
 var velocity := Vector3.ZERO
 var grounded := false
 var direction := Vector3.ZERO
@@ -71,12 +87,11 @@ func _physics_process(delta: float) -> void:
 		walk_particles.amount_ratio = 0.0
 	walk_particles.process_material.direction = (-velocity.normalized()).slerp(Vector3.UP * 2.0, 0.8)
 	walk_particles.process_material.gravity = -9.8 * up
-	if not velocity.is_zero_approx():
-		mesh.rotation.y = velocity.slide(up).angle_to(Vector3.FORWARD)
+
 	former_velocity = velocity
 func _process(delta: float) -> void:
 	state_machine.tick(delta)
-
+@warning_ignore_start("unused_variable", "unused_parameter")
 func step(delta: float, speed: float) -> void:
 	var is_step := false
 	var step_result : StepResult = StepResult.new()
@@ -190,7 +205,6 @@ func step_check(delta: float, is_jumping_: bool, step_result: StepResult):
 					step_result.diff_position = test_motion_result.get_travel()
 					step_result.normal = test_motion_result.get_collision_normal()
 		elif is_zero_approx(test_motion_result.get_collision_normal().dot(up)):
-			print("CACA")
 			var wall_collision_normal: Vector3 = test_motion_result.get_collision_normal()
 			transform3d.origin += wall_collision_normal * WALL_MARGIN
 			motion = (velocity * delta).slide(wall_collision_normal)
@@ -214,26 +228,36 @@ func step_check(delta: float, is_jumping_: bool, step_result: StepResult):
 						step_result.normal = test_motion_result.get_collision_normal()
 
 	return is_step
+@warning_ignore_restore("unused_parameter", "unused_variable")
 func jump() -> void:
 	if jumped or not Input.is_action_just_pressed("jump"): return
 	velocity = velocity.slide(up) + up * jump_state.jump_velocity
 	jumped = true
 	just_jumped.emit()
 func check_grounded(delta: float) -> void:
+	old_up = up
 	var col = KinematicCollision3D.new()
-	var is_colliding := test_move(transform, (velocity - up) * delta, col, 0.001, true)
+	var cold = KinematicCollision3D.new()
+	var is_colliding := test_move(global_transform, (velocity + up * g_gravity() * delta) * delta, col, 0.005, true)
+	var is_colliding_down := test_move(global_transform, (up * g_gravity() * delta) * delta, cold, 0.005, true)
 	was_grounded = grounded
-	if is_colliding:
+	if not is_colliding and current_terrain and current_terrain.override_up:
+		is_colliding = test_move(global_transform, (velocity + current_up * g_gravity() * delta) * delta , col, 0.005, true)
+	if is_colliding or is_colliding_down:
+		col = col if is_colliding else cold
 		var new_up := col.get_normal(0)
 		var terrain := col.get_collider() as Terrain
 		if terrain:
 			current_terrain = terrain
+			if terrain.override_up:
+				current_up = new_up
 			if new_up.angle_to(up) < get_max_angle():
 				grounded = true
 				up = new_up
-				if terrain.override_up:
-					current_up = new_up
 				return
+			else: 
+				current_terrain = null
+				grounded = false
 		elif new_up.angle_to(up) < get_max_angle():
 			grounded = true
 			up = new_up
@@ -241,9 +265,9 @@ func check_grounded(delta: float) -> void:
 			current_up = Vector3.ZERO
 			return
 		else:
-			grounded = false
 			current_terrain = null
 			current_up = Vector3.ZERO
+			grounded = false
 	else:
 		grounded = false
 func check_inputs() -> void:
@@ -254,6 +278,7 @@ func rotate_to_normal(delta: float) -> void:
 	if up != basis.y:
 		var q := Quaternion(basis.y, up)
 		quaternion =  M.slerpq_normal(quaternion, q * quaternion, delta, 15.0)
+
 func get_max_angle() -> float:
 	return max_ground_angle if not current_terrain or not current_terrain.override_max_angle else current_terrain.max_angle
 func apply_gravity(delta: float) -> void:
@@ -264,18 +289,31 @@ func apply_gravity(delta: float) -> void:
 	if d > 0.0:
 		#up
 		velocity += modifier * up * jump_state.jump_gravity * delta
-	elif d >= -100.0 :
+	elif d >= -max_down_vel :
 		#down
 		velocity += modifier * up * jump_state.fall_gravity * delta
 
+func g_gravity() -> float:
+	var d := velocity.dot(up)
+	if d > 0.0:
+		#up
+		return jump_state.jump_gravity
+	else :
+		#down
+		return jump_state.fall_gravity
+
+func apply_snap(_delta: float) -> void:
+	var col = KinematicCollision3D.new()
+	var collided := test_move(transform, -up * snap_height, col, 0.001, true, 1)
+	if collided:
+		position += col.get_travel()
 func move(delta: float) -> void:
 	var subdelt := delta / delta_iterations
 	for i in delta_iterations:
 		var col := move_and_collide(velocity * subdelt)
 		if col:
-			if col.get_normal().angle_to(up) < get_max_angle() and not was_grounded and grounded:
-				print(col.get_remainder().dot(up), "A")
 			velocity = velocity.slide(col.get_normal(0))
+
 func get_nearest_cardinal() -> Vector3:
 	var dotup := up.dot(Vector3.UP)
 	#var dotleft := up.dot(Vector3.LEFT)

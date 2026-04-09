@@ -5,32 +5,64 @@ class_name FallPlayerState
 @export var mesh: PlayerMesh
 @export var scale_over_curve: Curve
 @export var coyote_timer := 0.1
+@export var rotate_node: Node3D
+@export var full_rot_vol_curve: Curve
+@export var vol_over_vel_curve: Curve
+@export var pitch_over_full_rot : Curve
+@export var rot_vel_over_vel : Curve
+@export var sound: RaytracedAudioPlayer3D
+@export var ghost_threshold := -40.0
 var t := 0.0
+var ghost_t := 0.0
+var rot := 0.0
+var old_rot := 0.0
 func on_enter():
+	prints("ENTERED AIR", up)
 	player.left_ground.emit()
 	t = 0.0
+	ghost_t = 0.0
+	rot = 0.0
+	old_rot = 0.0
 	player.camera.target_fov = target_fov
 	if mesh.tween: mesh.tween.kill()
 	player.is_in_air = true
+	if not sound.playing:
+		sound.play(10.0)
 func on_exit():
 	player.jumped = false
 	player.let_go_of_space = false
 	player.is_in_air = false
-
+	mesh.rotation.x = 0.0
+	sound.volume_linear = 0.0
 func tick(delta: float):
-	if velocity.dot(up) < 0.0:
+	var upvel := velocity.dot(up)
+	if upvel < 0.0:
 		t += delta
 	if t > 2.0: 
 		get_tree().current_scene.on_die()
 		t = 0.0
+	if upvel < ghost_threshold:
+		ghost_t += delta
+	if ghost_t > 0.08:
+		var g := Ghost.new(player.mesh, 2.0, 0.5)
+		get_tree().current_scene.world_3d.add_child(g)
+		ghost_t = 0.0
 func physics_tick(delta: float):
-	if grounded:
+	if grounded or player.was_grounded:
 		player.landed.emit(player.former_velocity)
+		var spd := velocity.slide(up).length()
 		if player.direction:
-			transition("move")
+			if spd > 45.0:
+				transition("drift")
+			else:
+				transition("move")
 		else:
-			transition("idle")
+			if player.direction.dot(velocity.slide(up)) < 0:
+				transition("stop")
+			else:
+				transition("idle")
 		return
+
 	if t > minimum_jump_timer and not player.let_go_of_space and not Input.is_action_pressed("jump"):
 		player.let_go_of_space = true
 	player.apply_gravity(delta)
@@ -48,3 +80,13 @@ func physics_tick(delta: float):
 	var sc := scale_over_curve.sample(c)
 	if not mesh.tween or not mesh.tween.is_running(): 
 		mesh.scale_root.scale = Vector3(1.0 / sc, sc, 1.0 / sc)
+	var pitch = pitch_over_full_rot.sample(rot)
+	var vol = full_rot_vol_curve.sample(rot)
+	var vol_over_v = vol_over_vel_curve.sample(velocity.dot(up))
+	sound.volume_linear = vol * vol_over_v
+	sound.pitch_scale = pitch
+	var rotvel := rot_vel_over_vel.sample(velocity.dot(up))
+	old_rot = rot
+	rot += PI * delta * rotvel
+	rot = fmod(rot, TAU)
+	mesh.rotation.x = -rot

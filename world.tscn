@@ -4,10 +4,12 @@
 [ext_resource type="Script" uid="uid://tkw7vhllq1en" path="res://ui.gd" id="1_f3sb7"]
 [ext_resource type="Theme" uid="uid://bhbf8f1vtd2pp" path="res://special/theme.tres" id="1_fj7yv"]
 [ext_resource type="PackedScene" uid="uid://b7p8r2rky365t" path="res://entities/player/player.tscn" id="1_tlwt5"]
+[ext_resource type="Script" uid="uid://c63dhtg6jq2u7" path="res://levels/world3d.gd" id="2_ioo17"]
 [ext_resource type="PackedScene" uid="uid://cgt7tfmdhprwk" path="res://levels/level1/level.tscn" id="3_036b0"]
-[ext_resource type="Sky" uid="uid://dh223pfwllj35" path="res://special/NightSkyHDRI003_1K.tres" id="3_pkg7o"]
 [ext_resource type="AudioStream" uid="uid://dd172h8l6rpxb" path="res://entities/player/sounds/hardwoosh.mp3" id="4_dwbse"]
+[ext_resource type="Texture2D" uid="uid://dr8mm482llyap" path="res://special/NightSkyHDRI003_1K_TONEMAPPED.jpg" id="6_ioo17"]
 [ext_resource type="Script" uid="uid://cv7erkggx0n7o" path="res://special/coin_manager.gd" id="8_gbfbk"]
+[ext_resource type="Script" uid="uid://b1qbv1s5568fo" path="res://special/command_manager.gd" id="10_wse8f"]
 
 [sub_resource type="Curve" id="Curve_dwbse"]
 _limits = [0.5, 2.0, 0.0, 1.0]
@@ -22,11 +24,33 @@ point_count = 3
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.6432292, 0.6098742), 2.2388163, 3.687979, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 3
 
+[sub_resource type="Curve" id="Curve_wse8f"]
+_limits = [0.5, 1.0, 0.0, 3.14]
+_data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(3.14, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_ic0uy"]
+_limits = [0.0, 1.0, 0.0, 3.14]
+_data = [Vector2(0, 0.6955504), 0.0, 0.0, 0, 0, Vector2(3.14, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_k3n1d"]
+_limits = [0.5, 3.0, 0.0, 3.14]
+_data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(3.14, 3), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wse8f"]
+panorama = ExtResource("6_ioo17")
+filter = false
+
+[sub_resource type="Sky" id="Sky_wse8f"]
+sky_material = SubResource("PanoramaSkyMaterial_wse8f")
+
 [sub_resource type="Environment" id="Environment_036b0"]
 background_mode = 2
-sky = ExtResource("3_pkg7o")
-ambient_light_source = 1
-reflected_light_source = 2
+sky = SubResource("Sky_wse8f")
+ambient_light_source = 3
+reflected_light_source = 1
 tonemap_mode = 2
 glow_enabled = true
 
@@ -40,10 +64,15 @@ environment = NodePath("World/WorldEnvironment")
 pitch_over_v = SubResource("Curve_dwbse")
 vol_over_v = SubResource("Curve_pkg7o")
 v_over_v = SubResource("Curve_gbfbk")
+pitch_over_diff = SubResource("Curve_wse8f")
+v_over_diff = SubResource("Curve_ic0uy")
+duration_over_diff = SubResource("Curve_k3n1d")
 woosh = NodePath("World/Woosh")
 
-[node name="World" type="Node3D" parent="." unique_id=1046924746]
+[node name="World" type="Node3D" parent="." unique_id=1046924746 node_paths=PackedStringArray("level")]
 unique_name_in_owner = true
+script = ExtResource("2_ioo17")
+level = NodePath("Level")
 
 [node name="Level" parent="World" unique_id=1036663807 instance=ExtResource("3_036b0")]
 
@@ -59,28 +88,12 @@ environment = SubResource("Environment_036b0")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="World" unique_id=937621591]
 transform = Transform3D(0.67574465, -0.66912836, -0.30925152, 0.6909041, 0.4286928, 0.58212894, -0.2569451, -0.60703367, 0.7519903, 0, 0, 0)
+light_angular_distance = 0.5
 shadow_enabled = true
 directional_shadow_mode = 0
+directional_shadow_fade_start = 1.0
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="World" unique_id=32922922]
-visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-stretch = true
-stretch_shrink = 2
-
-[node name="SubViewport" type="SubViewport" parent="World/SubViewportContainer" unique_id=1564980922]
-handle_input_locally = false
-msaa_3d = 2
-use_occlusion_culling = true
-audio_listener_enable_3d = true
-size = Vector2i(640, 360)
-render_target_update_mode = 0
-
-[node name="UI" type="Control" parent="." unique_id=1244635623]
+[node name="UI" type="Control" parent="." unique_id=1244635623 node_paths=PackedStringArray("fps_label", "speed_label", "player")]
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 15
@@ -91,6 +104,9 @@ grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("1_fj7yv")
 script = ExtResource("1_f3sb7")
+fps_label = NodePath("VBoxContainer/FPS Label")
+speed_label = NodePath("VBoxContainer/Speed Label")
+player = NodePath("../World/Player")
 
 [node name="TabContainer" type="TabContainer" parent="UI" unique_id=908940474]
 visible = false
@@ -167,10 +183,21 @@ step = 0.01
 layout_mode = 2
 size_flags_horizontal = 2
 
-[node name="FPS Label" type="Label" parent="UI" unique_id=47087975]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI" unique_id=1306597782]
 layout_mode = 0
 offset_right = 40.0
-offset_bottom = 17.0
+offset_bottom = 40.0
+
+[node name="FPS Label" type="Label" parent="UI/VBoxContainer" unique_id=47087975]
+layout_mode = 2
+
+[node name="Speed Label" type="Label" parent="UI/VBoxContainer" unique_id=1190674776]
+layout_mode = 2
 
 [node name="CoinManager" type="Node" parent="." unique_id=1190794270]
 script = ExtResource("8_gbfbk")
+
+[node name="CommandManager" type="Node" parent="." unique_id=1922917168 node_paths=PackedStringArray("game")]
+process_mode = 3
+script = ExtResource("10_wse8f")
+game = NodePath("..")

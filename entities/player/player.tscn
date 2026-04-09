@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://b3rd7k1j0m6th" path="res://entities/player/jump_state.gd" id="2_bls4j"]
 [ext_resource type="Script" uid="uid://byshlqnjxjr46" path="res://entities/player/player_camera.gd" id="2_sglur"]
 [ext_resource type="Script" uid="uid://yxg2xbvke2bb" path="res://entities/player/mesh.gd" id="3_221hk"]
+[ext_resource type="Shader" uid="uid://de28q2bg8uklt" path="res://entities/player/player.gdshader" id="3_wuv6x"]
 [ext_resource type="Script" uid="uid://dftqo2odm2rkk" path="res://components/state_machine/state_machine.gd" id="4_bls4j"]
 [ext_resource type="Script" uid="uid://ci58u4pdehljw" path="res://entities/player/states/idle.gd" id="5_fkugw"]
 [ext_resource type="Script" uid="uid://cdj1tccn5r75l" path="res://entities/player/states/fall.gd" id="6_8fjmc"]
@@ -24,7 +25,7 @@
 [ext_resource type="AudioStream" uid="uid://bpt8o1sbcawnq" path="res://entities/player/sounds/Sound_Ideas,_SKID,_CARTOON_-_BENT_SKID.ogg" id="21_eyb6c"]
 [ext_resource type="AudioStream" uid="uid://dj5f5kl1mpydx" path="res://entities/player/sounds/impact.tres" id="23_ghoj8"]
 [ext_resource type="AudioStream" uid="uid://cjstm1ytfiix8" path="res://entities/player/sounds/light.tres" id="24_t1t22"]
-[ext_resource type="AudioStream" uid="uid://gj1t2ptcj4w7" path="res://special/boom.wav" id="25_50fht"]
+[ext_resource type="AudioStream" uid="uid://dwc3ni7qrjhrx" path="res://entities/respawn/bong_001.ogg" id="26_wuv6x"]
 
 [sub_resource type="Resource" id="Resource_fkugw"]
 script = ExtResource("2_bls4j")
@@ -37,20 +38,51 @@ _limits = [0.0, 1.0, 0.0, 80.0]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(9.347827, 0.9586427), 0.014468935, 0.014468935, 0, 0, Vector2(50.434784, 0.607105), 0.0, 0.0, 0, 0, Vector2(80, 1), 0.0, 0.0, 0, 0]
 point_count = 4
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t1t22"]
-transparency = 1
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_wuv6x"]
+frequency = 0.003
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qpopc"]
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_wuv6x")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qpopc"]
+render_priority = 0
+shader = ExtResource("3_wuv6x")
+shader_parameter/noise = SubResource("NoiseTexture2D_qpopc")
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_sfv1e"]
-material = SubResource("StandardMaterial3D_t1t22")
+material = SubResource("ShaderMaterial_qpopc")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sfv1e"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_sfv1e"]
+radius = 0.12
 
 [sub_resource type="Curve" id="Curve_221hk"]
 _limits = [1.0, 1.3832062, -101.5, 30.0]
 _data = [Vector2(-101.5, 1.3832062), 0.0, 0.0, 0, 0, Vector2(-73.76172, 1.3304235), -0.00606325, -0.00606325, 0, 0, Vector2(-60.406254, 1.1397543), -0.010266467, -0.010266467, 0, 0, Vector2(-46.36589, 1.0416468), -0.004897253, -0.004897253, 0, 0, Vector2(-23.197922, 1), 0.0, 0.0, 0, 0, Vector2(-5.1822968, 1.0598149), 0.005637614, 0.005637614, 0, 0, Vector2(30, 1.3304235), 0.008580766, 0.0, 0, 0]
 point_count = 7
+
+[sub_resource type="Curve" id="Curve_wuv6x"]
+_limits = [0.0, 1.0, 0.0, 6.28]
+_data = [Vector2(0, 0.7), 0.0, 0.0, 0, 0, Vector2(1.8840001, 0.7), 0.0, 0.0, 0, 0, Vector2(3.14, 0.7), 0.0, 0.0, 0, 0, Vector2(5.024, 0.7), 0.0, 0.0, 0, 0, Vector2(6.28, 0.7), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="Curve" id="Curve_gt4e4"]
+_limits = [0.0, 1.0, -100.0, 10.0]
+_data = [Vector2(-100, 1), 0.0, 0.0, 0, 0, Vector2(-25.64103, 0.25532866), -0.012864758, -0.012864758, 0, 0, Vector2(-3.5897446, 0), 0.0, 0.0, 0, 0, Vector2(10, 0.3534636), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_qpopc"]
+_limits = [0.5, 2.0, 0.0, 6.28]
+_data = [Vector2(0, 1.0066351), 0.0, 0.0, 0, 0, Vector2(1.580979, 1.5325341), 0.0, 0.0, 0, 0, Vector2(3.1326804, 0.99828756), 0.0, 0.0, 0, 0, Vector2(4.684382, 1.5074912), 0.0, 0.0, 0, 0, Vector2(6.28, 1.031678), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="Curve" id="Curve_wq0jh"]
+_limits = [0.0, 8.0, -100.0, 15.0]
+_data = [Vector2(-100, 7.8152747), 0.0, 0.0, 0, 0, Vector2(-41.29371, 4.582593), -0.032301698, -0.032301698, 0, 0, Vector2(-1.0839157, 1.1879282), 0.0, 0.0, 0, 0, Vector2(15, 2.718322), 0.0, 0.0, 0, 0]
+point_count = 4
 
 [sub_resource type="Curve" id="Curve_ghoj8"]
 _limits = [0.0, 1.0, 0.0, 80.0]
@@ -58,8 +90,8 @@ _data = [Vector2(16.875, 0.1819942), 0.0, 0.0, 0, 0, Vector2(80, 0.0561471), 0.0
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_t1t22"]
-_limits = [0.0, 143.37, 0.0, 80.0]
-_data = [Vector2(0, 143.37), 0.0, 0.0, 0, 0, Vector2(16.521738, 0.043147326), 0.0, 0.0, 0, 0, Vector2(80, 0.2609138), 0.0, 0.0, 0, 0]
+_limits = [0.0, 34.951218, 0.0, 80.0]
+_data = [Vector2(0, 1.0553627), 0.0, 0.0, 0, 0, Vector2(17.902, 0.025), 0.0, 0.0, 0, 0, Vector2(80, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="Curve" id="Curve_mtric"]
@@ -67,14 +99,14 @@ _limits = [0.0, 100.0, 0.0, 1.0]
 _data = [Vector2(0.24305555, 0), 0.0, 0.0, 0, 0, Vector2(1, 18.678413), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_eyb6c"]
+[sub_resource type="CurveTexture" id="CurveTexture_wq0jh"]
 curve = SubResource("Curve_mtric")
 
 [sub_resource type="Curve" id="Curve_eyb6c"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_221hk"]
+[sub_resource type="CurveTexture" id="CurveTexture_gt4e4"]
 curve = SubResource("Curve_eyb6c")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_we0b7"]
@@ -92,16 +124,16 @@ radial_accel_min = -23.190002
 radial_accel_max = -9.660002
 damping_min = 1.0
 damping_max = 1.0
-damping_curve = SubResource("CurveTexture_eyb6c")
+damping_curve = SubResource("CurveTexture_wq0jh")
 scale_min = 0.5
 scale_max = 0.78
-scale_curve = SubResource("CurveTexture_221hk")
+scale_curve = SubResource("CurveTexture_gt4e4")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_we0b7"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_24ehl"]
 shading_mode = 2
 
 [sub_resource type="BoxMesh" id="BoxMesh_we0b7"]
-material = SubResource("StandardMaterial3D_we0b7")
+material = SubResource("StandardMaterial3D_24ehl")
 size = Vector3(0.25, 0.25, 0.25)
 
 [sub_resource type="Curve" id="Curve_7thud"]
@@ -121,22 +153,29 @@ jump_state = SubResource("Resource_fkugw")
 camera = NodePath("RotNode/RollNode/CameraArm/Camera")
 state_machine = NodePath("Components/StateMachine")
 walk_particles = NodePath("Components/GPUParticles3D")
-mesh = NodePath("Node3D/Mesh")
+mesh = NodePath("Node3D/RotationRoot/Mesh")
 rot_node = NodePath("PanNode")
 light = NodePath("OmniLight3D")
 light_sound = NodePath("Sounds/Light")
 max_ground_angle = 0.785
 particle_ratio_curve = SubResource("Curve_we0b7")
+snap_height = 1.4
+stop_friction = 50.0
 
 [node name="Node3D" type="Node3D" parent="." unique_id=932722891]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+top_level = true
 
-[node name="Mesh" type="MeshInstance3D" parent="Node3D" unique_id=1064027633 node_paths=PackedStringArray("player", "scale_root")]
+[node name="RotationRoot" type="Node3D" parent="Node3D" unique_id=997735036]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Node3D/RotationRoot" unique_id=1064027633 node_paths=PackedStringArray("player", "scale_root", "pos_root")]
+instance_shader_parameters/alpha = 1.0
 mesh = SubResource("CapsuleMesh_sfv1e")
 script = ExtResource("3_221hk")
-player = NodePath("../..")
-scale_root = NodePath("..")
+player = NodePath("../../..")
+scale_root = NodePath("../..")
+pos_root = NodePath("../..")
 
 [node name="SHape" type="CollisionShape3D" parent="." unique_id=259482628]
 shape = SubResource("CapsuleShape3D_sfv1e")
@@ -160,10 +199,13 @@ arm = NodePath("..")
 rot_node = NodePath("../../..")
 player = NodePath("../../../..")
 zoom = 1.03
+rotation_easing_coefficient = 3.0
 
-[node name="RaytracedAudioListener" type="AudioListener3D" parent="RotNode/RollNode/CameraArm/Camera" unique_id=173598494]
+[node name="RaytracedAudioListener" type="AudioListener3D" parent="RotNode/RollNode/CameraArm/Camera" unique_id=173598494 node_paths=PackedStringArray("ray_owner")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.302, 0)
+doppler_tracking = 2
 script = ExtResource("8_26q78")
+ray_owner = NodePath("..")
 muffle_enabled = false
 metadata/_custom_type_script = "uid://bjpmu5sklv5h8"
 
@@ -184,10 +226,17 @@ player = NodePath("../../..")
 target_fov = 75.0
 metadata/_custom_type_script = "uid://ci58u4pdehljw"
 
-[node name="Fall" type="Node" parent="Components/StateMachine" unique_id=17624998 node_paths=PackedStringArray("mesh", "player")]
+[node name="Fall" type="Node" parent="Components/StateMachine" unique_id=17624998 node_paths=PackedStringArray("mesh", "rotate_node", "sound", "player")]
 script = ExtResource("6_8fjmc")
-mesh = NodePath("../../../Node3D/Mesh")
+mesh = NodePath("../../../Node3D/RotationRoot/Mesh")
 scale_over_curve = SubResource("Curve_221hk")
+coyote_timer = 0.2
+rotate_node = NodePath("../../../Node3D/RotationRoot")
+full_rot_vol_curve = SubResource("Curve_wuv6x")
+vol_over_vel_curve = SubResource("Curve_gt4e4")
+pitch_over_full_rot = SubResource("Curve_qpopc")
+rot_vel_over_vel = SubResource("Curve_wq0jh")
+sound = NodePath("../../../Sounds/Swoosh")
 player = NodePath("../../..")
 target_fov = 75.0
 metadata/_custom_type_script = "uid://cdj1tccn5r75l"
@@ -199,8 +248,7 @@ metadata/_custom_type_script = "uid://decokuot14jx4"
 
 [node name="Drift" type="Node" parent="Components/StateMachine" unique_id=2003229580 node_paths=PackedStringArray("mesh", "player")]
 script = ExtResource("9_we0b7")
-accel = 25.0
-mesh = NodePath("../../../Node3D/Mesh")
+mesh = NodePath("../../../Node3D/RotationRoot/Mesh")
 time_over_speed = SubResource("Curve_ghoj8")
 player = NodePath("../../..")
 target_fov = 105.0
@@ -208,9 +256,8 @@ metadata/_custom_type_script = "uid://d26o2jsaseiaw"
 
 [node name="Stop" type="Node" parent="Components/StateMachine" unique_id=751906714 node_paths=PackedStringArray("skid", "mesh", "player")]
 script = ExtResource("10_mtric")
-friction = 50.0
 skid = NodePath("../../../Sounds/Skid")
-mesh = NodePath("../../../Node3D/Mesh")
+mesh = NodePath("../../../Node3D/RotationRoot/Mesh")
 time_over_speed = SubResource("Curve_t1t22")
 player = NodePath("../../..")
 target_fov = 105.0
@@ -223,6 +270,9 @@ lifetime = 1.5
 randomness = 0.11
 process_material = SubResource("ParticleProcessMaterial_we0b7")
 draw_pass_1 = SubResource("BoxMesh_we0b7")
+
+[node name="RayCast3D" type="RayCast3D" parent="Components" unique_id=1225709947]
+target_position = Vector3(0, -2.37, 0)
 
 [node name="Sounds" type="Node3D" parent="." unique_id=755281305 node_paths=PackedStringArray("player", "footstep", "impact", "jump", "boom")]
 script = ExtResource("9_7thud")
@@ -242,6 +292,7 @@ script = ExtResource("9_bectd")
 metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 
 [node name="Winds" type="Node3D" parent="Sounds" unique_id=187211755 node_paths=PackedStringArray("player")]
+process_mode = 4
 script = ExtResource("12_a1qjk")
 player = NodePath("../..")
 light = ExtResource("13_b2kln")
@@ -293,9 +344,13 @@ script = ExtResource("9_bectd")
 metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 
 [node name="Boom" type="AudioStreamPlayer3D" parent="Sounds" unique_id=504564816]
-stream = ExtResource("25_50fht")
-volume_db = -8.377
+stream = ExtResource("26_wuv6x")
 unit_size = 23.6
+script = ExtResource("9_bectd")
+metadata/_custom_type_script = "uid://dkb8ltjc6067n"
+
+[node name="Swoosh" type="AudioStreamPlayer3D" parent="Sounds" unique_id=789387964]
+stream = ExtResource("15_gx6sm")
 script = ExtResource("9_bectd")
 metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 

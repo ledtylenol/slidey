@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://bst7wah1ks0xu"]
+
+[ext_resource type="Shader" uid="uid://de28q2bg8uklt" path="res://entities/player/player.gdshader" id="1_wyapq"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_wuv6x"]
+frequency = 0.003
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_gsvh4"]
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_wuv6x")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qpopc"]
+render_priority = 0
+shader = ExtResource("1_wyapq")
+shader_parameter/noise = SubResource("NoiseTexture2D_gsvh4")
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_3md0c"]
+material = SubResource("ShaderMaterial_qpopc")
+
+[sub_resource type="Curve" id="Curve_s26jk"]
+_limits = [0.0, 100.0, 0.0, 1.0]
+_data = [Vector2(0.24305555, 0), 0.0, 0.0, 0, 0, Vector2(1, 18.678413), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_eyb6c"]
+curve = SubResource("Curve_s26jk")
+
+[sub_resource type="Curve" id="Curve_3oegr"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_221hk"]
+curve = SubResource("Curve_3oegr")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_discx"]
+particle_flag_align_y = true
+emission_shape_offset = Vector3(0, 0.055, 0.265)
+emission_shape = 3
+emission_box_extents = Vector3(0.47, 0.095, 0.525)
+angle_min = -720.0
+angle_max = 720.0
+direction = Vector3(0, 0.675, 1)
+flatness = 0.687
+initial_velocity_min = 3.0
+initial_velocity_max = 5.0
+radial_accel_min = -23.190002
+radial_accel_max = -9.660002
+damping_min = 1.0
+damping_max = 1.0
+damping_curve = SubResource("CurveTexture_eyb6c")
+scale_min = 0.5
+scale_max = 0.78
+scale_curve = SubResource("CurveTexture_221hk")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_we0b7"]
+shading_mode = 2
+
+[sub_resource type="BoxMesh" id="BoxMesh_vawav"]
+material = SubResource("StandardMaterial3D_we0b7")
+size = Vector3(0.25, 0.25, 0.25)
+
+[node name="Stub" type="Node3D" unique_id=142307942]
+
+[node name="Mesh" type="MeshInstance3D" parent="." unique_id=203885547]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+instance_shader_parameters/alpha = 1.0
+mesh = SubResource("CapsuleMesh_3md0c")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=943760051]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.85624063, 0)
+amount = 100
+lifetime = 1.5
+randomness = 0.11
+process_material = SubResource("ParticleProcessMaterial_discx")
+draw_pass_1 = SubResource("BoxMesh_vawav")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=485794714]
+light_energy = 3.819
+omni_range = 7.756815

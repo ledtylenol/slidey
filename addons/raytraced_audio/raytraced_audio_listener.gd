@@ -108,6 +108,7 @@ var rays: Array[AudioRay] = []
 		_update_ray_configuration()
 		ray_configuration_changed.emit()
 
+@export var ray_owner: Node3D
 @export_category("Muffle")
 ## Enables [RaytracedAudioPlayer3D]s muffling behind walls
 @export var muffle_enabled: bool = true
@@ -186,7 +187,7 @@ func _ready() -> void:
 		_pan_effect = AudioServer.get_bus_effect(i, 0)
 
 	if is_enabled:
-		setup()
+		call_deferred("setup")
 
 	set_process(auto_update)
 	if is_enabled:
@@ -237,7 +238,10 @@ func setup() -> void:
 	for __ in rays_count:
 		var rc: AudioRay = AudioRay.new(max_raycast_dist, max_bounces)
 		rc.set_scatter_model(ray_scatter_model)
-		add_child(rc, INTERNAL_MODE_BACK)
+		if ray_owner:
+			ray_owner.add_child(rc, INTERNAL_MODE_BACK)
+		else:
+			add_child(rc, INTERNAL_MODE_BACK)
 		rays.push_back(rc)
 
 

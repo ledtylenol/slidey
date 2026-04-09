@@ -3,16 +3,19 @@ class_name PlayerMesh
 var tween: Tween
 @export var player: Player
 @export var scale_root: Node3D
+@export var pos_root: Node3D
 func _ready() -> void:
 	player.landed.connect(on_landing)
 	get_tree().current_scene.just_reset.connect(tween_reset)
+	get_tree().current_scene.player_teleported.connect(reset_pos)
+
 func on_landing(vel: Vector3) -> void:
 	var spd := vel.dot(-player.up)
-	if spd < 10.0: return
+	var displace := scale_root.scale if spd < 10.0 else Vector3(1.2, 0.89, 1.2)
 	if tween:
 		tween.kill()
 	tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
-	tween.tween_property(scale_root, "scale", Vector3.ONE, 0.6).from(Vector3(1.2, 0.89, 1.2))
+	tween.tween_property(scale_root, "scale", Vector3.ONE, 0.6).from(displace)
 func on_ground_left() -> void:
 	if tween:
 		tween.kill()
@@ -37,3 +40,17 @@ func tween_reset() -> void:
 	tween = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
 	var r := randf_range(0.4, 1.5)
 	tween.tween_property(scale_root, "scale", Vector3.ONE, 1.1).from(Vector3(r, 1 / r, r))
+
+func _physics_process(_delta: float) -> void:
+	pos_root.position = player.position - player.basis.y
+	var velocity := player.velocity
+	var up := player.up
+	var q: Quaternion
+	if not velocity.slide(up).is_zero_approx():
+		q = Quaternion(-pos_root.basis.z,velocity.slide(up))
+		pos_root.quaternion = q * pos_root.quaternion
+	q = Quaternion(pos_root.basis.y,player.basis.y)
+	pos_root.quaternion = q * pos_root.quaternion
+func reset_pos() -> void:
+	pos_root.position = player.position - player.basis.y
+	reset_physics_interpolation()

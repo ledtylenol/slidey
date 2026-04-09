@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://bfuiasbvgxahh"]
+
+[ext_resource type="Script" uid="uid://bhw2a4l6sgtl6" path="res://special/shader_compiler.gd" id="1_xavic"]
+[ext_resource type="Texture2D" uid="uid://dr8mm482llyap" path="res://special/NightSkyHDRI003_1K_TONEMAPPED.jpg" id="2_4ist7"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_nm3oe"]
+panorama = ExtResource("2_4ist7")
+filter = false
+
+[sub_resource type="Sky" id="Sky_wse8f"]
+sky_material = SubResource("PanoramaSkyMaterial_nm3oe")
+
+[sub_resource type="Environment" id="Environment_20k8q"]
+background_mode = 2
+sky = SubResource("Sky_wse8f")
+ambient_light_source = 3
+reflected_light_source = 1
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="ShaderCompiler" type="Node3D" unique_id=1928285637]
+script = ExtResource("1_xavic")
+scenes = Array[String](["uid://onugg084mmda", "uid://cso6ftafnp3fo", "uid://bst7wah1ks0xu", "uid://c77v8tk21wult"])
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1653248541]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.265)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=120745626]
+environment = SubResource("Environment_20k8q")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1086968944]
+transform = Transform3D(0.67574465, -0.66912836, -0.30925152, 0.6909041, 0.4286928, 0.58212894, -0.2569451, -0.60703367, 0.7519903, 0, 0, 0)
+light_angular_distance = 0.5
+shadow_enabled = true
+directional_shadow_mode = 0
+directional_shadow_fade_start = 1.0
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1583538319]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect" unique_id=455433717]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -86.0
+offset_top = -21.0
+offset_right = 86.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="ColorRect/VBoxContainer" unique_id=1245562451]
+layout_mode = 2
+text = "COMPILING SHADERS"
+
+[node name="ProgressBar" type="ProgressBar" parent="ColorRect/VBoxContainer" unique_id=255859136]
+layout_mode = 2
+max_value = 1.0

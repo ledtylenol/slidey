@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="slidey"
-run/main_scene="uid://7icgpbiglhj4"
+run/main_scene="uid://bfuiasbvgxahh"
 config/features=PackedStringArray("4.6", "Forward Plus")
 run/max_fps=260
 config/icon="res://icon.svg"
@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 [audio]
 
 buses/default_bus_layout="uid://bc32txhfxbjsj"
+general/default_playback_type.web=0
 
 [autoload]
 
@@ -95,11 +96,13 @@ ambient_bus=&"RaytracedAmbient"
 textures/canvas_textures/default_texture_filter=0
 textures/canvas_textures/default_texture_repeat=1
 rendering_device/driver.windows="d3d12"
+textures/vram_compression/import_etc2_astc=true
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality=0
 lights_and_shadows/positional_shadow/soft_shadow_filter_quality=0
 anti_aliasing/quality/msaa_3d=2
 textures/decals/filter=0
 textures/light_projectors/filter=0
+occlusion_culling/use_occlusion_culling=true
 
 [richer_text_label]
 

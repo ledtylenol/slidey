@@ -6,8 +6,8 @@
 [ext_resource type="Script" uid="uid://dkb8ltjc6067n" path="res://addons/raytraced_audio/raytraced_audio_player_3d.gd" id="4_5wv18"]
 
 [sub_resource type="Curve" id="Curve_sogop"]
-_limits = [1.0, 2.0, 0.0, 1.0]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1.5908629), 0.0, 0.0, 0, 0]
+_limits = [1.0, 3.0, 0.0, 5.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(5, 1.9837564), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_tvniy"]
@@ -24,6 +24,7 @@ transform = Transform3D(10.672534, 0, 0, 0, 10.672534, 0, 0, 0, 10.672534, 0, 0,
 
 [node name="Object_2" parent="Sketchfab_Scene/Sketchfab_model/Coin_obj_cleaner_materialmerger_gles" parent_id_path=PackedInt32Array(830117128, 471851575) index="0" unique_id=579100583]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.155)
+cast_shadow = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2099467008]
 shape = SubResource("SphereShape3D_tvniy")

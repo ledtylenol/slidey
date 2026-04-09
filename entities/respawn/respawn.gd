@@ -7,7 +7,6 @@ extends Node3D
 
 func _func_godot_apply_properties(entity_properties: Dictionary) -> void:
 	id = entity_properties.id
-	print("applied %d" % id)
 func _ready() -> void:
 	if Engine.is_editor_hint(): return
 	area_3d.body_entered.connect(set_spawnpoint)
@@ -15,7 +14,7 @@ func _ready() -> void:
 func set_spawnpoint(b: Node3D) -> void:
 	if b is not Player: return
 	
-	get_tree().current_scene.spawnpoint = transform
+	get_tree().current_scene.set_spawnpoint(transform)
 	get_tree().current_scene.last_id = max(get_tree().current_scene.last_id, id)
 	pop.play()
 	visible = false

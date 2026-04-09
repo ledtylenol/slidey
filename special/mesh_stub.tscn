@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://c77v8tk21wult"]
+
+[ext_resource type="Material" uid="uid://b6kx17djym0dp" path="res://tb/mats/N006.tres" id="1_fn08x"]
+[ext_resource type="Material" uid="uid://owr5tkwflymx" path="res://tb/mats/PAT0003.tres" id="2_rgbw1"]
+[ext_resource type="Material" uid="uid://d1eecl73uinkw" path="res://tb/mats/CARPET03.tres" id="3_rgbw1"]
+[ext_resource type="Material" uid="uid://hdcookejey45" path="res://tb/mats/CARPET10.tres" id="4_gmwci"]
+[ext_resource type="Material" uid="uid://cvex6toty8yn7" path="res://addons/func_godot/textures/default_material.tres" id="5_2f4bk"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_gmwci"]
+material = ExtResource("1_fn08x")
+
+[sub_resource type="BoxMesh" id="BoxMesh_2f4bk"]
+material = ExtResource("2_rgbw1")
+
+[sub_resource type="BoxMesh" id="BoxMesh_rmigg"]
+material = ExtResource("3_rgbw1")
+
+[sub_resource type="BoxMesh" id="BoxMesh_pbv18"]
+material = ExtResource("4_gmwci")
+
+[sub_resource type="BoxMesh" id="BoxMesh_2nbpv"]
+material = ExtResource("5_2f4bk")
+
+[node name="MeshStub" type="Node3D" unique_id=2079271562]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1475282157]
+mesh = SubResource("BoxMesh_gmwci")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=762899812]
+mesh = SubResource("BoxMesh_2f4bk")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=869067443]
+mesh = SubResource("BoxMesh_rmigg")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="." unique_id=247251085]
+mesh = SubResource("BoxMesh_pbv18")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="." unique_id=755867387]
+mesh = SubResource("BoxMesh_2nbpv")

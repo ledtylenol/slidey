@@ -28,7 +28,7 @@ func _init(raycast_dist: float, max_bounce_count: int) -> void:
 
 func _enter_tree() -> void:
 	owner = get_parent()
-	assert(owner is RaytracedAudioListener)
+	#assert(owner is RaytracedAudioListener)
 
 
 func _ready() -> void:

@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bqmdp3wxf4ss2"
 path.s3tc="res://.godot/imported/light_03.png-248f3ca3b962f86e283357989d985e02.s3tc.ctex"
+path.etc2="res://.godot/imported/light_03.png-248f3ca3b962f86e283357989d985e02.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://entities/player/particles/light_03.png"
-dest_files=["res://.godot/imported/light_03.png-248f3ca3b962f86e283357989d985e02.s3tc.ctex"]
+dest_files=["res://.godot/imported/light_03.png-248f3ca3b962f86e283357989d985e02.s3tc.ctex", "res://.godot/imported/light_03.png-248f3ca3b962f86e283357989d985e02.etc2.ctex"]
 
 [params]
 

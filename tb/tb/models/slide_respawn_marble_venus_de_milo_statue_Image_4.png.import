@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://bi48e8hd7w1pp"
 path.s3tc="res://.godot/imported/slide_respawn_marble_venus_de_milo_statue_Image_4.png-daa1619a743c362ce4d560cfe479b691.s3tc.ctex"
+path.etc2="res://.godot/imported/slide_respawn_marble_venus_de_milo_statue_Image_4.png-daa1619a743c362ce4d560cfe479b691.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://tb/tb/models/slide_respawn_marble_venus_de_milo_statue_Image_4.png"
-dest_files=["res://.godot/imported/slide_respawn_marble_venus_de_milo_statue_Image_4.png-daa1619a743c362ce4d560cfe479b691.s3tc.ctex"]
+dest_files=["res://.godot/imported/slide_respawn_marble_venus_de_milo_statue_Image_4.png-daa1619a743c362ce4d560cfe479b691.s3tc.ctex", "res://.godot/imported/slide_respawn_marble_venus_de_milo_statue_Image_4.png-daa1619a743c362ce4d560cfe479b691.etc2.ctex"]
 
 [params]
 
