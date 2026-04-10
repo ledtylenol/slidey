@@ -16,6 +16,7 @@ func physics_tick(delta: float) -> void:
 	if slid < 15.0:
 		var angle := player.get_max_angle()
 		if up.angle_to(player.get_nearest_cardinal()) > angle:
+			print("A")
 			player.up = player.get_nearest_cardinal()
 	player.jump()
 	if not player.jumped:

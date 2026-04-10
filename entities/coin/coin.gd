@@ -22,7 +22,7 @@ func _physics_process(_delta: float) -> void:
 		quaternion = q * quaternion
 func on_body(b: Node3D) -> void:
 	if b is not Player: return
-	CoinManager.coin(self)
+	get_tree().current_scene.coin_manager.coin(self)
 	set_deferred("monitoring", false)
 	visible = false
 	sound.pitch_scale = pitch_over_heat.sample(CoinManager.heat)

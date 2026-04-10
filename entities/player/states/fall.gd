@@ -10,17 +10,22 @@ class_name FallPlayerState
 @export var vol_over_vel_curve: Curve
 @export var pitch_over_full_rot : Curve
 @export var rot_vel_over_vel : Curve
+@export var update_freq_over_vel : Curve
 @export var sound: RaytracedAudioPlayer3D
 @export var ghost_threshold := -40.0
 var t := 0.0
+var jump_t := 0.0
 var ghost_t := 0.0
+var anim_t := 0.0
 var rot := 0.0
 var old_rot := 0.0
 func on_enter():
 	prints("ENTERED AIR", up)
 	player.left_ground.emit()
 	t = 0.0
+	jump_t = 0.0
 	ghost_t = 0.0
+	anim_t = 0.0
 	rot = 0.0
 	old_rot = 0.0
 	player.camera.target_fov = target_fov
@@ -34,7 +39,9 @@ func on_exit():
 	player.is_in_air = false
 	mesh.rotation.x = 0.0
 	sound.volume_linear = 0.0
+	mesh.reset_physics_interpolation()
 func tick(delta: float):
+	jump_t += delta
 	var upvel := velocity.dot(up)
 	if upvel < 0.0:
 		t += delta
@@ -47,6 +54,10 @@ func tick(delta: float):
 		var g := Ghost.new(player.mesh, 2.0, 0.5)
 		get_tree().current_scene.world_3d.add_child(g)
 		ghost_t = 0.0
+	anim_t += delta
+	if anim_t > 1.0 / update_freq_over_vel.sample(upvel):
+		anim_t = 0.0
+		mesh.rotation.x = rot
 func physics_tick(delta: float):
 	if grounded or player.was_grounded:
 		player.landed.emit(player.former_velocity)
@@ -63,7 +74,7 @@ func physics_tick(delta: float):
 				transition("idle")
 		return
 
-	if t > minimum_jump_timer and not player.let_go_of_space and not Input.is_action_pressed("jump"):
+	if jump_t > minimum_jump_timer and not player.let_go_of_space and not Input.is_action_pressed("jump"):
 		player.let_go_of_space = true
 	player.apply_gravity(delta)
 	if player.direction:
@@ -89,4 +100,4 @@ func physics_tick(delta: float):
 	old_rot = rot
 	rot += PI * delta * rotvel
 	rot = fmod(rot, TAU)
-	mesh.rotation.x = -rot
+	#mesh.rotation.x = -rot

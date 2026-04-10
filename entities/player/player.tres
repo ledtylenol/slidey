@@ -1,0 +1,18 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dg88xmbunj2ux"]
+
+[ext_resource type="Shader" uid="uid://de28q2bg8uklt" path="res://entities/player/player.gdshader" id="1_gybsv"]
+[ext_resource type="Texture2D" uid="uid://dwujxdu3puns1" path="res://entities/player/MarkPainting2_MarkPainting.png" id="2_irhpw"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_wuv6x"]
+frequency = 0.003
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qpopc"]
+generate_mipmaps = false
+noise = SubResource("FastNoiseLite_wuv6x")
+seamless = true
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_gybsv")
+shader_parameter/noise = SubResource("NoiseTexture2D_qpopc")
+shader_parameter/tex = ExtResource("2_irhpw")

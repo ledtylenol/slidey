@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://b3rd7k1j0m6th" path="res://entities/player/jump_state.gd" id="2_bls4j"]
 [ext_resource type="Script" uid="uid://byshlqnjxjr46" path="res://entities/player/player_camera.gd" id="2_sglur"]
 [ext_resource type="Script" uid="uid://yxg2xbvke2bb" path="res://entities/player/mesh.gd" id="3_221hk"]
-[ext_resource type="Shader" uid="uid://de28q2bg8uklt" path="res://entities/player/player.gdshader" id="3_wuv6x"]
+[ext_resource type="Material" uid="uid://dg88xmbunj2ux" path="res://entities/player/player.tres" id="3_qpopc"]
 [ext_resource type="Script" uid="uid://dftqo2odm2rkk" path="res://components/state_machine/state_machine.gd" id="4_bls4j"]
 [ext_resource type="Script" uid="uid://ci58u4pdehljw" path="res://entities/player/states/idle.gd" id="5_fkugw"]
 [ext_resource type="Script" uid="uid://cdj1tccn5r75l" path="res://entities/player/states/fall.gd" id="6_8fjmc"]
@@ -27,32 +27,20 @@
 [ext_resource type="AudioStream" uid="uid://cjstm1ytfiix8" path="res://entities/player/sounds/light.tres" id="24_t1t22"]
 [ext_resource type="AudioStream" uid="uid://dwc3ni7qrjhrx" path="res://entities/respawn/bong_001.ogg" id="26_wuv6x"]
 
-[sub_resource type="Resource" id="Resource_fkugw"]
-script = ExtResource("2_bls4j")
-jump_height = 5.0
-jump_peak_time = 0.4
-jump_descend_time = 0.45
-
 [sub_resource type="Curve" id="Curve_we0b7"]
 _limits = [0.0, 1.0, 0.0, 80.0]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(9.347827, 0.9586427), 0.014468935, 0.014468935, 0, 0, Vector2(50.434784, 0.607105), 0.0, 0.0, 0, 0, Vector2(80, 1), 0.0, 0.0, 0, 0]
 point_count = 4
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_wuv6x"]
-frequency = 0.003
+[sub_resource type="Resource" id="Resource_wuv6x"]
+script = ExtResource("2_bls4j")
+jump_height = 5.0
+jump_peak_time = 0.4
+jump_descend_time = 0.45
+metadata/_custom_type_script = "uid://b3rd7k1j0m6th"
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qpopc"]
-generate_mipmaps = false
-noise = SubResource("FastNoiseLite_wuv6x")
-seamless = true
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qpopc"]
-render_priority = 0
-shader = ExtResource("3_wuv6x")
-shader_parameter/noise = SubResource("NoiseTexture2D_qpopc")
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_sfv1e"]
-material = SubResource("ShaderMaterial_qpopc")
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_wuv6x"]
+material = ExtResource("3_qpopc")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sfv1e"]
 
@@ -82,6 +70,11 @@ point_count = 5
 [sub_resource type="Curve" id="Curve_wq0jh"]
 _limits = [0.0, 8.0, -100.0, 15.0]
 _data = [Vector2(-100, 7.8152747), 0.0, 0.0, 0, 0, Vector2(-41.29371, 4.582593), -0.032301698, -0.032301698, 0, 0, Vector2(-1.0839157, 1.1879282), 0.0, 0.0, 0, 0, Vector2(15, 2.718322), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_24ehl"]
+_limits = [0.0, 39.117455, -100.0, 15.0]
+_data = [Vector2(-100, 20.149313), 0.0, 0.0, 0, 0, Vector2(-29.230774, 12.471729), -0.3254626, -0.3254626, 0, 0, Vector2(-6.9813538, 3.794632), 0.0, 0.0, 0, 0, Vector2(15, 11.342674), 0.0, 0.0, 0, 0]
 point_count = 4
 
 [sub_resource type="Curve" id="Curve_ghoj8"]
@@ -146,32 +139,31 @@ _limits = [0.5, 1.2, 0.0, 50.0]
 _data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(50, 0.8911985), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[node name="Player" type="CharacterBody3D" unique_id=845295137 node_paths=PackedStringArray("camera", "state_machine", "walk_particles", "mesh", "rot_node", "light", "light_sound")]
+[node name="Player" type="CharacterBody3D" unique_id=845295137 node_paths=PackedStringArray("camera", "walk_particles", "mesh", "light", "light_sound", "state_machine", "rot_node")]
 collision_layer = 4
 script = ExtResource("1_abrql")
-jump_state = SubResource("Resource_fkugw")
 camera = NodePath("RotNode/RollNode/CameraArm/Camera")
-state_machine = NodePath("Components/StateMachine")
 walk_particles = NodePath("Components/GPUParticles3D")
 mesh = NodePath("Node3D/RotationRoot/Mesh")
-rot_node = NodePath("PanNode")
 light = NodePath("OmniLight3D")
 light_sound = NodePath("Sounds/Light")
-max_ground_angle = 0.785
 particle_ratio_curve = SubResource("Curve_we0b7")
-snap_height = 1.4
 stop_friction = 50.0
+state_machine = NodePath("Components/StateMachine")
+rot_node = NodePath("PanNode")
+jump_state = SubResource("Resource_wuv6x")
+max_ground_angle = 0.785
 
 [node name="Node3D" type="Node3D" parent="." unique_id=932722891]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 top_level = true
 
 [node name="RotationRoot" type="Node3D" parent="Node3D" unique_id=997735036]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 1, 0)
 
 [node name="Mesh" type="MeshInstance3D" parent="Node3D/RotationRoot" unique_id=1064027633 node_paths=PackedStringArray("player", "scale_root", "pos_root")]
 instance_shader_parameters/alpha = 1.0
-mesh = SubResource("CapsuleMesh_sfv1e")
+mesh = SubResource("CapsuleMesh_wuv6x")
 script = ExtResource("3_221hk")
 player = NodePath("../../..")
 scale_root = NodePath("../..")
@@ -228,6 +220,7 @@ metadata/_custom_type_script = "uid://ci58u4pdehljw"
 
 [node name="Fall" type="Node" parent="Components/StateMachine" unique_id=17624998 node_paths=PackedStringArray("mesh", "rotate_node", "sound", "player")]
 script = ExtResource("6_8fjmc")
+minimum_jump_timer = 0.05
 mesh = NodePath("../../../Node3D/RotationRoot/Mesh")
 scale_over_curve = SubResource("Curve_221hk")
 coyote_timer = 0.2
@@ -236,6 +229,7 @@ full_rot_vol_curve = SubResource("Curve_wuv6x")
 vol_over_vel_curve = SubResource("Curve_gt4e4")
 pitch_over_full_rot = SubResource("Curve_qpopc")
 rot_vel_over_vel = SubResource("Curve_wq0jh")
+update_freq_over_vel = SubResource("Curve_24ehl")
 sound = NodePath("../../../Sounds/Swoosh")
 player = NodePath("../../..")
 target_fov = 75.0

@@ -54,9 +54,10 @@ reflected_light_source = 1
 tonemap_mode = 2
 glow_enabled = true
 
-[node name="Game" type="Node" unique_id=490218917 node_paths=PackedStringArray("world_3d", "ui", "player", "sun", "environment", "woosh")]
+[node name="Game" type="Node" unique_id=490218917 node_paths=PackedStringArray("world_3d", "coin_manager", "ui", "player", "sun", "environment", "woosh")]
 script = ExtResource("1_aqk2v")
 world_3d = NodePath("World")
+coin_manager = NodePath("CoinManager")
 ui = NodePath("UI")
 player = NodePath("World/Player")
 sun = NodePath("World/DirectionalLight3D")
@@ -93,7 +94,7 @@ shadow_enabled = true
 directional_shadow_mode = 0
 directional_shadow_fade_start = 1.0
 
-[node name="UI" type="Control" parent="." unique_id=1244635623 node_paths=PackedStringArray("fps_label", "speed_label", "player")]
+[node name="UI" type="Control" parent="." unique_id=1244635623 node_paths=PackedStringArray("fps_label", "speed_label", "coin_label", "player", "coin_manager")]
 unique_name_in_owner = true
 layout_mode = 3
 anchors_preset = 15
@@ -104,9 +105,11 @@ grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("1_fj7yv")
 script = ExtResource("1_f3sb7")
-fps_label = NodePath("VBoxContainer/FPS Label")
-speed_label = NodePath("VBoxContainer/Speed Label")
+fps_label = NodePath("MarginContainer/VBoxContainer/FPS Label")
+speed_label = NodePath("MarginContainer/VBoxContainer/Speed Label")
+coin_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Control/Coin Label")
 player = NodePath("../World/Player")
+coin_manager = NodePath("../CoinManager")
 
 [node name="TabContainer" type="TabContainer" parent="UI" unique_id=908940474]
 visible = false
@@ -183,16 +186,40 @@ step = 0.01
 layout_mode = 2
 size_flags_horizontal = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI" unique_id=1306597782]
+[node name="MarginContainer" type="MarginContainer" parent="UI" unique_id=590095518]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
 
-[node name="FPS Label" type="Label" parent="UI/VBoxContainer" unique_id=47087975]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/MarginContainer" unique_id=1306597782]
 layout_mode = 2
 
-[node name="Speed Label" type="Label" parent="UI/VBoxContainer" unique_id=1190674776]
+[node name="FPS Label" type="Label" parent="UI/MarginContainer/VBoxContainer" unique_id=47087975]
 layout_mode = 2
+
+[node name="Speed Label" type="Label" parent="UI/MarginContainer/VBoxContainer" unique_id=1190674776]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/MarginContainer/VBoxContainer" unique_id=565807191]
+layout_mode = 2
+
+[node name="Control" type="MarginContainer" parent="UI/MarginContainer/VBoxContainer/HBoxContainer" unique_id=553037730]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Coin Label" type="Label" parent="UI/MarginContainer/VBoxContainer/HBoxContainer/Control" unique_id=65614223]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "123"
+
+[node name="Coins Label" type="Label" parent="UI/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1475289296]
+layout_mode = 2
+size_flags_horizontal = 8
+text = " coins"
 
 [node name="CoinManager" type="Node" parent="." unique_id=1190794270]
 script = ExtResource("8_gbfbk")

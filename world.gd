@@ -1,6 +1,7 @@
 extends Node
 class_name Game
 @export var world_3d: GameWorld3D
+@export var coin_manager: CoinManager
 @export var ui: Control
 @export var player: Player
 @export_category("Sun")

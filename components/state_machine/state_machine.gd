@@ -11,6 +11,7 @@ func _ready() -> void:
 			states[child.name.to_lower()] = child
 			child.transitioned.connect(transition)
 	current_state = initial_state
+	get_tree().current_scene.player_teleported.connect(func(): current_state.transition("idle"))
 func tick(delta: float) -> void:
 	if current_state:
 		current_state.tick(delta)
