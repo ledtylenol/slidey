@@ -34,13 +34,17 @@ point_count = 4
 
 [sub_resource type="Resource" id="Resource_wuv6x"]
 script = ExtResource("2_bls4j")
-jump_height = 5.0
+jump_height = 6.5
 jump_peak_time = 0.4
 jump_descend_time = 0.45
 metadata/_custom_type_script = "uid://b3rd7k1j0m6th"
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_wuv6x"]
 material = ExtResource("3_qpopc")
+
+[sub_resource type="SphereMesh" id="SphereMesh_wuv6x"]
+radius = 0.25
+height = 0.5
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sfv1e"]
 
@@ -59,7 +63,7 @@ point_count = 5
 
 [sub_resource type="Curve" id="Curve_gt4e4"]
 _limits = [0.0, 1.0, -100.0, 10.0]
-_data = [Vector2(-100, 1), 0.0, 0.0, 0, 0, Vector2(-25.64103, 0.25532866), -0.012864758, -0.012864758, 0, 0, Vector2(-3.5897446, 0), 0.0, 0.0, 0, 0, Vector2(10, 0.3534636), 0.0, 0.0, 0, 0]
+_data = [Vector2(-100, 1), 0.0, 0.0, 0, 0, Vector2(-25.64103, 0.25532866), -0.012864758, -0.012864758, 0, 0, Vector2(-3.5897446, 0), 0.0, 0.0, 0, 0, Vector2(10, 0.08214927), 0.0, 0.0, 0, 0]
 point_count = 4
 
 [sub_resource type="Curve" id="Curve_qpopc"]
@@ -153,6 +157,7 @@ state_machine = NodePath("Components/StateMachine")
 rot_node = NodePath("PanNode")
 jump_state = SubResource("Resource_wuv6x")
 max_ground_angle = 0.785
+snap_height = 1.0
 
 [node name="Node3D" type="Node3D" parent="." unique_id=932722891]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
@@ -168,6 +173,14 @@ script = ExtResource("3_221hk")
 player = NodePath("../../..")
 scale_root = NodePath("../..")
 pos_root = NodePath("../..")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D/RotationRoot/Mesh" unique_id=130005346]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
+mesh = SubResource("SphereMesh_wuv6x")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Node3D/RotationRoot/Mesh" unique_id=1341516702]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, 0)
+mesh = SubResource("SphereMesh_wuv6x")
 
 [node name="SHape" type="CollisionShape3D" parent="." unique_id=259482628]
 shape = SubResource("CapsuleShape3D_sfv1e")
@@ -220,7 +233,7 @@ metadata/_custom_type_script = "uid://ci58u4pdehljw"
 
 [node name="Fall" type="Node" parent="Components/StateMachine" unique_id=17624998 node_paths=PackedStringArray("mesh", "rotate_node", "sound", "player")]
 script = ExtResource("6_8fjmc")
-minimum_jump_timer = 0.05
+minimum_jump_timer = 0.0
 mesh = NodePath("../../../Node3D/RotationRoot/Mesh")
 scale_over_curve = SubResource("Curve_221hk")
 coyote_timer = 0.2
@@ -235,8 +248,9 @@ player = NodePath("../../..")
 target_fov = 75.0
 metadata/_custom_type_script = "uid://cdj1tccn5r75l"
 
-[node name="Move" type="Node" parent="Components/StateMachine" unique_id=1557384918 node_paths=PackedStringArray("player")]
+[node name="Move" type="Node" parent="Components/StateMachine" unique_id=1557384918 node_paths=PackedStringArray("mesh", "player")]
 script = ExtResource("7_qiwj3")
+mesh = NodePath("../../../Node3D/RotationRoot/Mesh")
 player = NodePath("../../..")
 metadata/_custom_type_script = "uid://decokuot14jx4"
 

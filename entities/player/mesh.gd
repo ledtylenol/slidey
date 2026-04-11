@@ -4,12 +4,15 @@ var tween: Tween
 @export var player: Player
 @export var scale_root: Node3D
 @export var pos_root: Node3D
+var quat: Quaternion
+var rot := 0.0
 func _ready() -> void:
 	player.landed.connect(on_landing)
 	get_tree().current_scene.just_reset.connect(tween_reset)
 	get_tree().current_scene.player_teleported.connect(reset_pos)
 
 func on_landing(vel: Vector3) -> void:
+	rot = 0.0
 	var spd := vel.dot(-player.up)
 	var displace := scale_root.scale if spd < 10.0 else Vector3(1.2, 0.89, 1.2)
 	if tween:
@@ -46,10 +49,11 @@ func _physics_process(_delta: float) -> void:
 	var velocity := player.velocity
 	var up := player.up
 	var q: Quaternion
-	if not velocity.slide(up).is_zero_approx():
+	if velocity.slide(up).length() > 0.2:
 		q = Quaternion(-pos_root.basis.z,velocity.slide(up))
 		pos_root.quaternion = q * pos_root.quaternion
 	q = Quaternion(pos_root.basis.y,player.basis.y)
+
 	pos_root.quaternion = q * pos_root.quaternion
 func reset_pos() -> void:
 	pos_root.position = player.position - player.basis.y

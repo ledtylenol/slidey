@@ -19,6 +19,8 @@ var ghost_t := 0.0
 var anim_t := 0.0
 var rot := 0.0
 var old_rot := 0.0
+var state := 0
+var states: Array[int] = []
 func on_enter():
 	prints("ENTERED AIR", up)
 	player.left_ground.emit()
@@ -33,10 +35,22 @@ func on_enter():
 	player.is_in_air = true
 	if not sound.playing:
 		sound.play(10.0)
+	if not player.jumped:
+		state = 3
+		print("fell")
+	elif states.is_empty():
+		for i in 6:
+			states.push_back(i)
+		states.shuffle()
+		state = states.pop_back()
+		print("reset states")
+	else:
+		state = states.pop_back()
 func on_exit():
 	player.jumped = false
 	player.let_go_of_space = false
 	player.is_in_air = false
+	mesh.rotation.z = 0.0
 	mesh.rotation.x = 0.0
 	sound.volume_linear = 0.0
 	mesh.reset_physics_interpolation()
@@ -57,7 +71,8 @@ func tick(delta: float):
 	anim_t += delta
 	if anim_t > 1.0 / update_freq_over_vel.sample(upvel):
 		anim_t = 0.0
-		mesh.rotation.x = rot
+		rotate_mesh()
+
 func physics_tick(delta: float):
 	if grounded or player.was_grounded:
 		player.landed.emit(player.former_velocity)
@@ -74,7 +89,7 @@ func physics_tick(delta: float):
 				transition("idle")
 		return
 
-	if jump_t > minimum_jump_timer and not player.let_go_of_space and not Input.is_action_pressed("jump"):
+	if (player.jumped or jump_t > coyote_timer) and jump_t > minimum_jump_timer and not player.let_go_of_space and not Input.is_action_pressed("jump"):
 		player.let_go_of_space = true
 	player.apply_gravity(delta)
 	if player.direction:
@@ -84,8 +99,11 @@ func physics_tick(delta: float):
 			velocity = velocity.project(up) + M.smooth_slerp(slid, slerped, delta, 1.0)
 		else:
 			velocity = velocity.project(up) + M.smooth_nudgev(slid, slerped, delta, 1.0)
+	var jumped := player.jumped
 	if t <= coyote_timer:
 		player.jump()
+	if not (player.jumped and not jumped):
+		player.apply_snap(delta)
 	player.move(delta)
 	var c := velocity.dot(up)
 	var sc := scale_over_curve.sample(c)
@@ -101,3 +119,20 @@ func physics_tick(delta: float):
 	rot += PI * delta * rotvel
 	rot = fmod(rot, TAU)
 	#mesh.rotation.x = -rot
+
+func rotate_mesh() -> void: 
+	match state:
+		0:
+			mesh.rotation.z = -rot
+			mesh.rotation.x = rot
+		1:
+			mesh.rotation.z = rot
+			mesh.rotation.x = -rot
+		2:
+			mesh.rotation.z = -rot
+		3:
+			mesh.rotation.x = rot
+		4:
+			mesh.rotation.z = rot
+		5:
+			mesh.rotation.x = -rot

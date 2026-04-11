@@ -3,7 +3,7 @@ extends StaticBody3D
 class_name Terrain
 
 @export var sound: String
-@export var override_max_angle := false
+@export var override_angle := false
 @export var max_angle := PI/5
 @export var override_up := false
 

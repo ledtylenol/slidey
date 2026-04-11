@@ -20,11 +20,13 @@ config/icon="res://icon.svg"
 
 buses/default_bus_layout="uid://bc32txhfxbjsj"
 general/default_playback_type.web=0
+general/3d_panning_strength=1.0
 
 [autoload]
 
 Shaker="*uid://1n0u463g865i"
 Console="*uid://ouiu5xh1cs8n"
+Classes="*uid://dcon8dsfmp8ai"
 
 [display]
 
@@ -35,12 +37,25 @@ window/vsync/vsync_mode=0
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/console/plugin.cfg", "res://addons/func_godot/plugin.cfg", "res://addons/raytraced_audio/plugin.cfg", "res://addons/richtext2/plugin.cfg", "res://addons/shaker/plugin.cfg")
+enabled=PackedStringArray("res://addons/blender_godot_pipeline/plugin.cfg", "res://addons/console/plugin.cfg", "res://addons/func_godot/plugin.cfg", "res://addons/raytraced_audio/plugin.cfg", "res://addons/richtext2/plugin.cfg", "res://addons/shaker/plugin.cfg")
+
+[filesystem]
+
+import/blender/enabled=false
 
 [gui]
 
 theme/default_font_multichannel_signed_distance_field=true
 theme/custom_font="uid://dvme2yf7jylii"
+
+[importer_defaults]
+
+scene={
+&"animation/import": false,
+&"import_script/path": "uid://b741cuno86wxd",
+&"materials/extract": 1,
+&"materials/extract_path": "res://tb/mats"
+}
 
 [input]
 

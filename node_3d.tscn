@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://djwbra0hrrfa7"]
+
+[ext_resource type="PackedScene" uid="uid://dnwmuxpsxg25j" path="res://tb/test2.gltf" id="1_a202f"]
+[ext_resource type="Script" uid="uid://d02lvftc3pjwa" path="res://levels/level.gd" id="1_noarx"]
+[ext_resource type="ArrayOccluder3D" uid="uid://cgyhtfcf75ydk" path="res://tb/maps/occluders/node_3d.occ" id="2_r3fl7"]
+[ext_resource type="Script" uid="uid://bbxefswtcwj2s" path="res://components/spawn_root.gd" id="3_a0tk4"]
+
+[node name="Node3D" type="Node3D" unique_id=1457404897 node_paths=PackedStringArray("spawn_root")]
+script = ExtResource("1_noarx")
+spawn_root = NodePath("SpawnRoot")
+metadata/_custom_type_script = "uid://d02lvftc3pjwa"
+
+[node name="OccluderInstance3D" type="OccluderInstance3D" parent="." unique_id=169884539]
+transform = Transform3D(1, 0, 0, 0, -0.9999619, 0.008726637, 0, -0.008726637, -0.9999619, 0, 0, 0)
+occluder = ExtResource("2_r3fl7")
+
+[node name="test2" parent="." unique_id=2132265775 instance=ExtResource("1_a202f")]
+
+[node name="SpawnRoot" type="Marker3D" parent="." unique_id=253550949]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1625061, 11.4749975, 3.1497211)
+script = ExtResource("3_a0tk4")
+id = "tunnel"
+metadata/_custom_type_script = "uid://bbxefswtcwj2s"
+
+[editable path="test2"]

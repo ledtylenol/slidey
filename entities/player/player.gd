@@ -61,7 +61,7 @@ func apply_gravity(delta: float) -> void:
 	if grounded: return
 	var d := velocity.dot(up)
 	var modifier := 1.0
-	if let_go_of_space: modifier = 2.0
+	if jumped and let_go_of_space: modifier = 2.0
 	if d > 0.0:
 		#up
 		velocity += modifier * up * jump_state.jump_gravity * delta

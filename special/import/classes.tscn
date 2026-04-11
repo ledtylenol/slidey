@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dcon8dsfmp8ai"]
+
+[ext_resource type="Script" uid="uid://b1jtoqmdusk0k" path="res://special/import/classes.gd" id="1_25h71"]
+[ext_resource type="Script" uid="uid://cl0uvnlpnir0m" path="res://components/terrain.gd" id="2_857cd"]
+
+[node name="Node" type="Node" unique_id=1854793599]
+script = ExtResource("1_25h71")
+classes = Dictionary[String, Script]({
+"terrain": ExtResource("2_857cd")
+})

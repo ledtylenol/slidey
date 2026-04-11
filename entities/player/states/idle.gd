@@ -5,6 +5,9 @@ class_name IdlePlayerState
 func on_enter():
 	player.stopped_moving.emit()
 	player.camera.target_fov = target_fov
+	player.jumped = false
+	player.is_in_air = false
+	player.let_go_of_space = false
 func on_exit():
 	pass
 

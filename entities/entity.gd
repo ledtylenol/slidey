@@ -73,7 +73,7 @@ func check_grounded(delta: float) -> void:
 	else:
 		grounded = false
 func check_inputs() -> void:
-	var d := Input.get_vector("left", "right", "front", "back")
+	var d := Input.get_vector("left", "right", "front", "back") 
 	direction = rot_node.global_basis * Vector3(d.x, 0, d.y)
 
 func rotate_to_normal(delta: float) -> void:
@@ -82,7 +82,7 @@ func rotate_to_normal(delta: float) -> void:
 		quaternion =  M.slerpq_normal(quaternion, q * quaternion, delta, 15.0)
 
 func get_max_angle() -> float:
-	return max_ground_angle if not current_terrain or not current_terrain.override_max_angle else current_terrain.max_angle
+	return max_ground_angle if not current_terrain or not current_terrain.override_angle else current_terrain.max_angle
 func apply_gravity(delta: float) -> void:
 	if grounded: return
 	var d := velocity.dot(up)
@@ -104,9 +104,15 @@ func g_gravity() -> float:
 
 func apply_snap(_delta: float) -> void:
 	var col = KinematicCollision3D.new()
-	var collided := test_move(transform, -up * snap_height, col, 0.001, true, 1)
+	var collided := test_move(transform, -basis.y * snap_height, col, 0.001, true, 1)
 	if collided:
-		position += col.get_travel()
+		var angle := col.get_normal().angle_to(up)
+		if angle <= 0.1 or angle >= get_max_angle(): return
+		print(col.get_normal().dot(up))
+		#position += col.get_travel()
+		up = col.get_normal()
+		var q := Quaternion(basis.y, up)
+		velocity = q * velocity
 func move(delta: float) -> void:
 	var subdelt := delta / delta_iterations
 	for i in delta_iterations:
