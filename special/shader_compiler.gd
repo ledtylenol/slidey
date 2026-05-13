@@ -17,6 +17,7 @@ func _process(_delta: float) -> void:
 	while not scenes.is_empty() and i < 3:
 		var scene = load(scenes.pop_back())
 		var inst = scene.instantiate()
+		print(scene)
 		nodes.push_back(inst)
 		add_child(inst)
 		await inst.ready

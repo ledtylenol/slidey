@@ -2,12 +2,14 @@ shader_type spatial;
 
 uniform sampler2D noise: repeat_enable;
 void vertex() {
-	VERTEX.x += sin(TIME + VERTEX.y);
-	VERTEX.y += sin(TIME + VERTEX.x);
+	float n = texture(noise, UV + TIME / 10.0 + VERTEX.yx).r * 3.14;
+	VERTEX.x += sin(n);
+	VERTEX.y += cos(n);
+	VERTEX.z += sin(cos(n));
 }
 
 void fragment() {
-	ALBEDO = texture(noise, UV + TIME / 10.0).rgb;
+	ALBEDO = texture(noise, UV + TIME / 10.0).rgb * COLOR.rgb;
 }
 
 //void light() {

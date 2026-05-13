@@ -1,0 +1,38 @@
+[gd_resource type="CompositorEffect" script_class="DeathShader" format=3 uid="uid://b5j7hab7waxbn"]
+
+[ext_resource type="Script" uid="uid://c6hggm4ix6xvc" path="res://compositor/death/death_rect.gd" id="1_fj8hy"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_qqbdx"]
+noise_type = 2
+seed = 28
+frequency = 0.0103
+fractal_type = 2
+fractal_octaves = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_mdvgh"]
+noise = SubResource("FastNoiseLite_qqbdx")
+seamless = true
+
+[resource]
+resource_local_to_scene = false
+resource_name = ""
+enabled = true
+effect_callback_type = 4
+needs_motion_vectors = false
+needs_normal_roughness = true
+script = ExtResource("1_fj8hy")
+shader_code = "	vec2 fuv = (vec2(uv) + 0.5f) / vec2(size);
+	vec3 normal = get_view_normal(fuv);
+	float d = texture(depth, uv_norm).r;
+	vec2 suv =normalize(slide_uv(fuv, normal, d)) * 0.01;
+	if (d == 0.0) return;
+	float linear_depth = -length(get_cam_pos(fuv, d));
+	float n = texture(noise, uv_norm + suv * 10.0 ).r * 20.0;
+	float t = smoothstep(linear_depth - n , linear_depth - n + params.step_offset, -params.thres);
+	t = step(bayer8(uv) + 0.01, t);
+	if (t == 0.0) return;
+	color.rgb = vec3(0.0);"
+thres = 47.235
+noise = SubResource("NoiseTexture2D_mdvgh")
+time = 61.195
+metadata/_custom_type_script = "uid://c6hggm4ix6xvc"

@@ -5,6 +5,7 @@
 [resource]
 resource_name = "props"
 cull_mode = 2
+shading_mode = 0
 diffuse_mode = 3
 specular_mode = 1
 disable_ambient_light = true

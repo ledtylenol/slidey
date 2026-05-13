@@ -2,6 +2,7 @@ extends Area3D
 class_name Coin
 @onready var sound: RaytracedAudioPlayer3D = $RaytracedAudioPlayer3D
 @onready var raycast: RayCast3D = $RayCast3D
+var visible_on_screen_enabler_3d: VisibleOnScreenEnabler3D
 
 @export var pitch_over_heat: Curve
 var id := 0
@@ -11,6 +12,8 @@ func _ready() -> void:
 	if randi() % 2 == 0:
 		s = -1.0
 	call_deferred("rotate_object_local", Vector3.UP ,(randf_range(-PI, PI)))
+	visible_on_screen_enabler_3d = VisibleOnScreenEnabler3D.new()
+	call_deferred("add_child", visible_on_screen_enabler_3d)
 func _process(delta: float) -> void:
 	rotate_object_local(Vector3.UP, PI * delta * s)
 func _physics_process(_delta: float) -> void:
@@ -22,6 +25,7 @@ func _physics_process(_delta: float) -> void:
 		quaternion = q * quaternion
 func on_body(b: Node3D) -> void:
 	if b is not Player: return
+	visible_on_screen_enabler_3d.queue_free()
 	get_tree().current_scene.coin_manager.coin(self)
 	set_deferred("monitoring", false)
 	visible = false

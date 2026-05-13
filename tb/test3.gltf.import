@@ -1,0 +1,289 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://dstnbaenkn7bc"
+path="res://.godot/imported/test3.gltf-75440608e4fcbfef9e5418c897be9677.scn"
+
+[deps]
+
+source_file="res://tb/test3.gltf"
+dest_files=["res://.godot/imported/test3.gltf-75440608e4fcbfef9e5418c897be9677.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name=""
+nodes/root_script=null
+mesh_library/use_node_names_as_mesh_names=false
+array_mesh/deduplicate_surfaces=true
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+nodes/import_as_skeleton_bones=false
+nodes/use_name_suffixes=true
+nodes/use_node_type_suffixes=true
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=false
+animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=true
+animation/import_rest_as_RESET=false
+import_script/path="uid://b741cuno86wxd"
+materials/extract=1
+materials/extract_format=0
+materials/extract_path="res://tb/mats"
+_subresources={
+"materials": {
+"CARPET03": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://tb/mats/CARPET03.tres",
+"use_external/path": "uid://b11js1lbpmtyv"
+},
+"LEAF01": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://tb/mats/LEAF01.tres",
+"use_external/path": "uid://bnqxgqk5o8b17"
+},
+"N006": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://tb/mats/N006.tres",
+"use_external/path": "uid://buw7gn58u5vwi"
+}
+},
+"meshes": {
+"test3_Cube": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": false,
+"save_to_file/fallback_path": "",
+"save_to_file/path": ""
+},
+"test3_Cube_001": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": false,
+"save_to_file/fallback_path": "",
+"save_to_file/path": ""
+},
+"test3_Cube_002": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": false,
+"save_to_file/fallback_path": "",
+"save_to_file/path": ""
+},
+"test3_Cylinder": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": false,
+"save_to_file/fallback_path": "",
+"save_to_file/path": ""
+},
+"test3_Icosphere": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": false,
+"save_to_file/fallback_path": "",
+"save_to_file/path": ""
+},
+"test3_Icosphere_001": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": false,
+"save_to_file/fallback_path": "",
+"save_to_file/path": ""
+},
+"test3_Icosphere_002": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": false,
+"save_to_file/fallback_path": "",
+"save_to_file/path": ""
+},
+"test3_Icosphere_003": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": false,
+"save_to_file/fallback_path": "",
+"save_to_file/path": ""
+},
+"test3_Icosphere_004": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": false,
+"save_to_file/fallback_path": "",
+"save_to_file/path": ""
+},
+"test3_Icosphere_005": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": false,
+"save_to_file/fallback_path": "",
+"save_to_file/path": ""
+},
+"test3_Icosphere_006": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": false,
+"save_to_file/fallback_path": "",
+"save_to_file/path": ""
+},
+"test3_Icosphere_007": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": false,
+"save_to_file/fallback_path": "",
+"save_to_file/path": ""
+},
+"test3_Icosphere_008": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": false,
+"save_to_file/fallback_path": "",
+"save_to_file/path": ""
+},
+"test3_Icosphere_009": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": false,
+"save_to_file/fallback_path": "",
+"save_to_file/path": ""
+},
+"test3_Icosphere_010": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": false,
+"save_to_file/fallback_path": "",
+"save_to_file/path": ""
+},
+"test3_Icosphere_011": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": false,
+"save_to_file/fallback_path": "",
+"save_to_file/path": ""
+},
+"test3_Icosphere_012": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": false,
+"save_to_file/fallback_path": "",
+"save_to_file/path": ""
+},
+"test3_Icosphere_013": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": false,
+"save_to_file/fallback_path": "",
+"save_to_file/path": ""
+},
+"test3_Icosphere_014": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": false,
+"save_to_file/fallback_path": "",
+"save_to_file/path": ""
+},
+"test3_Icosphere_030": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": false,
+"save_to_file/fallback_path": "",
+"save_to_file/path": ""
+},
+"test3_Icosphere_031": {
+"generate/lightmap_uv": 1,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 20.0,
+"save_to_file/enabled": false,
+"save_to_file/fallback_path": "",
+"save_to_file/path": ""
+}
+},
+"nodes": {
+"PATH:Terrain_001": {
+"occluder/simplification_distance": 0.86
+},
+"PATH:Tree": {
+"occluder/simplification_distance": 2.0
+},
+"PATH:Tree_001": {
+"occluder/simplification_distance": 2.0
+},
+"PATH:Tree_002": {
+"occluder/simplification_distance": 2.0
+},
+"PATH:Tree_003": {
+"occluder/simplification_distance": 2.0
+},
+"PATH:Tree_004": {
+"occluder/simplification_distance": 2.0
+},
+"PATH:Tree_005": {
+"occluder/simplification_distance": 2.0
+},
+"PATH:Tree_006": {
+"occluder/simplification_distance": 2.0
+},
+"PATH:Tree_007": {
+"occluder/simplification_distance": 2.0
+},
+"PATH:Tree_008": {
+"occluder/simplification_distance": 2.0
+},
+"PATH:Tree_009": {
+"occluder/simplification_distance": 2.0
+}
+}
+}
+gltf/naming_version=0
+gltf/embedded_image_handling=1
+gltf/texture_map_mode=1

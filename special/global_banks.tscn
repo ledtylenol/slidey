@@ -1,0 +1,4 @@
+[gd_scene format=3 uid="uid://bjgc3x1cnijkl"]
+
+[node name="GlobalBanks" type="FmodBankLoader" unique_id=669397597]
+bank_paths = ["res://banks/Desktop/Master.strings.bank", "res://banks/Desktop/Master.bank", "res://banks/Desktop/Music.bank"]

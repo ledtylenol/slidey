@@ -46,6 +46,8 @@ func start() -> void:
 func teleport_player(xf: Transform3D) -> void:
 	player.transform = xf
 	player.up = xf.basis.y
+	player.current_terrain = null
+	player.target = null
 	player.velocity = Vector3.ZERO
 	player.reset_physics_interpolation()
 	player_teleported.emit()
@@ -85,7 +87,8 @@ func _input(event: InputEvent) -> void:
 				get_window().scaling_3d_scale = 1.0
 			else:
 				Engine.max_fps = 0
-				get_window().scaling_3d_scale = 1.0
+				get_window().scaling_3d_mode = Viewport.SCALING_3D_MODE_NEAREST
+				get_window().scaling_3d_scale = 0.5
 func invert_rotations() -> void:
 	if rotations.is_empty():
 		reset.emit(last_id)
@@ -119,5 +122,6 @@ func change_level_3d(scene: PackedScene, id: String) -> void:
 	tpmarkers.clear()
 	level_changed.emit(id)
 	world_3d.reset_physics_interpolation()
+	sun.visible = sc.sun_visible
 func add_marker(marker: TPMarker) -> void:
 	tpmarkers[marker.tp_name] = marker.transform

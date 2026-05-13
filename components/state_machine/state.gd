@@ -2,11 +2,15 @@
 extends Node
 class_name State
 
-@abstract func on_enter() -> void
-@abstract func on_exit() -> void
+func on_enter() -> void:
+	pass
+func on_exit() -> void:
+	pass
 
-@abstract func tick(_delta: float) -> void
-@abstract func physics_tick(_delta: float) -> void
+func tick(_delta: float) -> void:
+	pass
+func physics_tick(_delta: float) -> void:
+	pass
 
 signal transitioned(from: String, to: String)
 

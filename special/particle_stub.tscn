@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://b1w4ismjkvahy"]
+
+[ext_resource type="Material" uid="uid://u1832urnriu3" path="res://levels/level2/level2_outparts.tres" id="1_m7jdj"]
+[ext_resource type="Texture2D" uid="uid://bkrepmc2ce6uq" path="res://entities/player/particles/star_05.png" id="2_wcur7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i5arm"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("2_wcur7")
+texture_filter = 0
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_t1bsh"]
+material = SubResource("StandardMaterial3D_i5arm")
+
+[node name="ParticleStub" type="Node3D" unique_id=1609827256]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=78022502]
+transform = Transform3D(1, 0, 0, 0, 0.8594421, -0.51123315, 0, 0.51123315, 0.8594421, 0, 22.184591, 0)
+amount = 100
+lifetime = 10.0
+visibility_aabb = AABB(-27.755106, -16.704588, -41.36924, 56.52723, 54.145966, 112.83166)
+process_material = ExtResource("1_m7jdj")
+draw_pass_1 = SubResource("QuadMesh_t1bsh")

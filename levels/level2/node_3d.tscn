@@ -1,0 +1,191 @@
+[gd_scene format=3 uid="uid://djwbra0hrrfa7"]
+
+[ext_resource type="Script" uid="uid://d02lvftc3pjwa" path="res://levels/level.gd" id="1_nm3sr"]
+[ext_resource type="Script" uid="uid://bbxefswtcwj2s" path="res://components/spawn_root.gd" id="2_trsj2"]
+[ext_resource type="PackedScene" uid="uid://dstnbaenkn7bc" path="res://tb/test3.gltf" id="3_77go2"]
+[ext_resource type="PackedScene" uid="uid://cammud6vgxmby" path="res://entities/stub/stub.tscn" id="4_hq7sg"]
+[ext_resource type="Material" uid="uid://u1832urnriu3" path="res://levels/level2/level2_outparts.tres" id="5_7rjet"]
+[ext_resource type="Texture2D" uid="uid://bkrepmc2ce6uq" path="res://entities/player/particles/star_05.png" id="6_3e4nw"]
+[ext_resource type="LightmapGIData" uid="uid://dgbj0niksijca" path="res://levels/level2/node_3d.lmbake" id="7_trsj2"]
+[ext_resource type="Texture2D" uid="uid://dwujxdu3puns1" path="res://entities/player/MarkPainting2_MarkPainting.png" id="8_77go2"]
+[ext_resource type="Script" uid="uid://c4t3ypbomgddh" path="res://addons/shaker/src/Vector3/shaker_component3D.gd" id="9_1ts3s"]
+[ext_resource type="Script" uid="uid://cs5eei32bg46a" path="res://addons/shaker/data/Vector3/BaseShakerType3D.gd" id="10_ep1sc"]
+[ext_resource type="Script" uid="uid://ccn60ikvsqphc" path="res://addons/shaker/data/Vector3/ShakerTypeSineWave3D.gd" id="11_oai76"]
+[ext_resource type="Script" uid="uid://tah42ld02qfu" path="res://addons/shaker/data/Vector3/ShakerPreset3D.gd" id="12_j6tnn"]
+[ext_resource type="Script" uid="uid://b2drvhkdt8k40" path="res://components/rotate_area.gd" id="13_ep1sc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nm3sr"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("6_3e4nw")
+texture_filter = 0
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_wc5p8"]
+material = SubResource("StandardMaterial3D_nm3sr")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_trsj2"]
+size = Vector3(20.945, 10.855, 7.585)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hq7sg"]
+albedo_texture = ExtResource("8_77go2")
+
+[sub_resource type="SphereMesh" id="SphereMesh_7rjet"]
+material = SubResource("StandardMaterial3D_hq7sg")
+radius = 2.0
+height = 4.0
+
+[sub_resource type="Resource" id="Resource_s0af8"]
+script = ExtResource("11_oai76")
+amplitude = Vector3(0, 2, 0)
+metadata/_custom_type_script = "uid://ccn60ikvsqphc"
+
+[sub_resource type="Resource" id="Resource_oiqr3"]
+script = ExtResource("12_j6tnn")
+RotationShake = Array[ExtResource("10_ep1sc")]([SubResource("Resource_s0af8")])
+metadata/_custom_type_script = "uid://tah42ld02qfu"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_oai76"]
+size = Vector3(40.57, 8.761, 24.28)
+
+[node name="Node3D" type="Node3D" unique_id=1457404897 node_paths=PackedStringArray("spawn_root")]
+script = ExtResource("1_nm3sr")
+spawn_root = NodePath("SpawnRoot")
+sun_visible = false
+metadata/_custom_type_script = "uid://d02lvftc3pjwa"
+
+[node name="SpawnRoot" type="Marker3D" parent="." unique_id=253550949]
+transform = Transform3D(1, 0, 0, 0, 0.8361043, -0.5485705, 0, 0.5485705, 0.8361043, 5.6838207, 19.648304, -10.988371)
+script = ExtResource("2_trsj2")
+id = "tunnel"
+metadata/_custom_type_script = "uid://bbxefswtcwj2s"
+
+[node name="test3" parent="." unique_id=9511335 instance=ExtResource("3_77go2")]
+
+[node name="Hermano The FIrst" parent="test3/Terrain_009" parent_id_path=PackedInt32Array(9511335, 16130536) index="0" unique_id=432401858]
+sound = "d"
+
+[node name="Stub" parent="test3" unique_id=1012144446 instance=ExtResource("4_hq7sg")]
+transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 1.8736506, 26.395798, 100.34526)
+speed_influence = 0.0
+dir_sign = -1
+
+[node name="Stub3" parent="test3" unique_id=865982151 instance=ExtResource("4_hq7sg")]
+transform = Transform3D(1, 0, 0, 0, 1, -1.7484555e-07, 0, 1.7484555e-07, 1, 1.8736506, 79.097984, 100.34526)
+speed_influence = 0.0
+dir_sign = -1
+
+[node name="Stub2" parent="test3" unique_id=533126351 instance=ExtResource("4_hq7sg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8736506, 9.98452, 64.03476)
+
+[node name="Stub4" parent="test3" unique_id=2143599412 instance=ExtResource("4_hq7sg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8736506, 98.62301, 243.22891)
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=1269431689]
+transform = Transform3D(1, 0, 0, 0, 0.8594421, -0.51123315, 0, 0.51123315, 0.8594421, 0, 22.184591, 0)
+amount = 100
+lifetime = 10.0
+visibility_aabb = AABB(-27.755106, -16.704588, -41.36924, 56.52723, 54.145966, 112.83166)
+process_material = ExtResource("5_7rjet")
+draw_pass_1 = SubResource("QuadMesh_wc5p8")
+
+[node name="GPUParticles3D4" type="GPUParticles3D" parent="." unique_id=2076685608]
+transform = Transform3D(0.16845648, 0.5039272, 0.84715986, 0, 0.8594421, -0.51123315, -0.9857091, 0.08612054, 0.1447786, 158.54681, -53.473846, 207.92255)
+amount = 100
+lifetime = 10.0
+visibility_aabb = AABB(-27.755106, -16.704588, -41.36924, 56.52723, 54.145966, 112.83166)
+process_material = ExtResource("5_7rjet")
+draw_pass_1 = SubResource("QuadMesh_wc5p8")
+
+[node name="GPUParticles3D3" type="GPUParticles3D" parent="." unique_id=1398308561]
+transform = Transform3D(-0.5790984, -0.41678676, -0.7006668, 0, 0.8594421, -0.51123315, 0.81525767, -0.2960543, -0.49770156, -134.07079, 22.184591, 268.70367)
+amount = 100
+lifetime = 10.0
+visibility_aabb = AABB(-27.755106, -16.704588, -41.36924, 56.52723, 54.145966, 112.83166)
+process_material = ExtResource("5_7rjet")
+draw_pass_1 = SubResource("QuadMesh_wc5p8")
+
+[node name="GPUParticles3D2" type="GPUParticles3D" parent="." unique_id=1506663745]
+transform = Transform3D(0.99670935, 0.041439928, 0.06966531, 0, 0.8594421, -0.51123315, -0.08105876, 0.50955087, 0.856614, -20.78432, 19.428606, 437.69788)
+amount = 100
+lifetime = 10.0
+visibility_aabb = AABB(-27.755106, -16.704588, -41.36924, 56.52723, 54.145966, 112.83166)
+process_material = ExtResource("5_7rjet")
+draw_pass_1 = SubResource("QuadMesh_wc5p8")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=276025058]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 22.568886, -17.44992)
+visible = false
+light_bake_mode = 1
+omni_range = 22.828
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="." unique_id=1188832880]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.8166656, 27.716862)
+visible = false
+light_bake_mode = 1
+omni_range = 22.828
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="." unique_id=504700161]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.181633, 3.9992123)
+visible = false
+light_bake_mode = 1
+omni_range = 22.828
+
+[node name="LightmapGI" type="LightmapGI" parent="." unique_id=1926435494]
+visible = false
+light_data = ExtResource("7_trsj2")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=642145619]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 9.773696, 82.01763)
+collision_layer = 128
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=775919369]
+shape = SubResource("BoxShape3D_trsj2")
+
+[node name="Node3D" type="Node3D" parent="." unique_id=477784039]
+transform = Transform3D(1, 0, 0, 0, 0.80325913, 0.59562975, 0, -0.59562975, 0.80325913, -142.02022, 0.889308, 263.90594)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D" unique_id=244866118]
+transform = Transform3D(-0.5557012, 0, -0.8313819, 0, 1, 0, 0.8313819, 0, -0.5557012, 0, 0, 0)
+mesh = SubResource("SphereMesh_7rjet")
+
+[node name="ShakerComponent3D" type="Node3D" parent="Node3D/MeshInstance3D" unique_id=322944658]
+script = ExtResource("9_1ts3s")
+is_playing = true
+AutoPlay = true
+shakerPreset = SubResource("Resource_oiqr3")
+metadata/_custom_type_script = "uid://c4t3ypbomgddh"
+
+[node name="Label3D" type="Label3D" parent="Node3D/MeshInstance3D" unique_id=2092314728]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.605, 0)
+billboard = 2
+text = "Spheric Pliers"
+font_size = 359
+
+[node name="RotateArea" type="Area3D" parent="." unique_id=1265506259 node_paths=PackedStringArray("target", "env_target")]
+transform = Transform3D(0.78456575, -0.39459458, 0.47827992, 0, 0.7713625, 0.63639605, -0.6200456, -0.49929455, 0.60518456, -142.02022, 0.889308, 263.90594)
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("13_ep1sc")
+target = NodePath("Marker3D")
+env_target = NodePath("Marker3D2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RotateArea" unique_id=2120444109]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8804321, 0)
+shape = SubResource("BoxShape3D_oai76")
+
+[node name="Marker3D" type="Marker3D" parent="RotateArea" unique_id=425266802]
+transform = Transform3D(0.67574453, -0.6691283, -0.30925158, -0.55895704, -0.19162755, -0.8067501, 0.48055822, 0.7180154, -0.5035053, 0, 0, 0)
+
+[node name="Marker3D2" type="Marker3D" parent="RotateArea" unique_id=1604333231]
+transform = Transform3D(-0.78260815, -0.62241966, 0.010864342, 0, -0.01745235, -0.99984765, 0.6225145, -0.78248894, 0.013658353, 0, 0, 0)
+
+[editable path="test3"]

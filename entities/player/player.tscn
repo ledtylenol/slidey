@@ -5,10 +5,10 @@
 [ext_resource type="Script" uid="uid://byshlqnjxjr46" path="res://entities/player/player_camera.gd" id="2_sglur"]
 [ext_resource type="Script" uid="uid://yxg2xbvke2bb" path="res://entities/player/mesh.gd" id="3_221hk"]
 [ext_resource type="Material" uid="uid://dg88xmbunj2ux" path="res://entities/player/player.tres" id="3_qpopc"]
-[ext_resource type="Script" uid="uid://dftqo2odm2rkk" path="res://components/state_machine/state_machine.gd" id="4_bls4j"]
 [ext_resource type="Script" uid="uid://ci58u4pdehljw" path="res://entities/player/states/idle.gd" id="5_fkugw"]
 [ext_resource type="Script" uid="uid://cdj1tccn5r75l" path="res://entities/player/states/fall.gd" id="6_8fjmc"]
 [ext_resource type="Script" uid="uid://decokuot14jx4" path="res://entities/player/states/move.gd" id="7_qiwj3"]
+[ext_resource type="Script" uid="uid://d3va3m6uc4o1i" path="res://entities/player/player_state_machine.gd" id="7_wuv6x"]
 [ext_resource type="Script" uid="uid://bjpmu5sklv5h8" path="res://addons/raytraced_audio/raytraced_audio_listener.gd" id="8_26q78"]
 [ext_resource type="Script" uid="uid://b72satx0k4wls" path="res://entities/player/sounds.gd" id="9_7thud"]
 [ext_resource type="Script" uid="uid://dkb8ltjc6067n" path="res://addons/raytraced_audio/raytraced_audio_player_3d.gd" id="9_bectd"]
@@ -17,15 +17,25 @@
 [ext_resource type="Script" uid="uid://bot4ypakil8g" path="res://entities/player/states/stop.gd" id="10_mtric"]
 [ext_resource type="Script" uid="uid://bb2gp81jpnp64" path="res://entities/player/winds.gd" id="12_a1qjk"]
 [ext_resource type="Curve" uid="uid://cn1mw4r6puydr" path="res://entities/player/sounds/lightwoosh.tres" id="13_b2kln"]
+[ext_resource type="Script" uid="uid://cuvxgg238p055" path="res://entities/player/states/home.gd" id="13_gt4e4"]
 [ext_resource type="AudioStream" uid="uid://b1na2k12noay2" path="res://entities/player/sounds/lightwoosh.mp3" id="13_j3ovn"]
+[ext_resource type="Script" uid="uid://dl46g2gg100af" path="res://addons/health_hitbox_hurtbox/3d/hit_box_3d/basic_hit_box_3d.gd" id="13_wq0jh"]
+[ext_resource type="Script" uid="uid://be6h3bib6psij" path="res://entities/player/states/float.gd" id="14_8q4fm"]
 [ext_resource type="AudioStream" uid="uid://bd2pesfcjojbg" path="res://entities/player/sounds/mediumwoosh.mp3" id="14_afbqv"]
+[ext_resource type="Script" uid="uid://hrwhd52e5mkq" path="res://addons/health_hitbox_hurtbox/resources/health_action.gd" id="14_gt4e4"]
 [ext_resource type="Curve" uid="uid://du6cglfxh8vl1" path="res://entities/player/sounds/medwoosh.tres" id="14_we0b7"]
 [ext_resource type="AudioStream" uid="uid://dd172h8l6rpxb" path="res://entities/player/sounds/hardwoosh.mp3" id="15_gx6sm"]
 [ext_resource type="Curve" uid="uid://colwvj0ic5yek" path="res://entities/player/sounds/hardwoosh.tres" id="15_mtric"]
+[ext_resource type="Script" uid="uid://df8tt6exgnci5" path="res://addons/health_hitbox_hurtbox/3d/hurt_box_3d/hurt_box_3d.gd" id="16_bwdx1"]
+[ext_resource type="Script" uid="uid://dr8bvnfebp76" path="res://addons/health_hitbox_hurtbox/health/health.gd" id="17_vewsg"]
+[ext_resource type="Script" uid="uid://bmt5wivg2awad" path="res://entities/player/mesh_spin_manager.gd" id="18_vewsg"]
 [ext_resource type="AudioStream" uid="uid://bpt8o1sbcawnq" path="res://entities/player/sounds/Sound_Ideas,_SKID,_CARTOON_-_BENT_SKID.ogg" id="21_eyb6c"]
 [ext_resource type="AudioStream" uid="uid://dj5f5kl1mpydx" path="res://entities/player/sounds/impact.tres" id="23_ghoj8"]
 [ext_resource type="AudioStream" uid="uid://cjstm1ytfiix8" path="res://entities/player/sounds/light.tres" id="24_t1t22"]
 [ext_resource type="AudioStream" uid="uid://dwc3ni7qrjhrx" path="res://entities/respawn/bong_001.ogg" id="26_wuv6x"]
+[ext_resource type="AudioStream" uid="uid://c0i4sc0tj7at4" path="res://entities/player/sounds/hit3.ogg" id="34_8q4fm"]
+[ext_resource type="AudioStream" uid="uid://d3sfr5aj2ks65" path="res://entities/player/sounds/superjump.tres" id="35_np63p"]
+[ext_resource type="AudioStream" uid="uid://d2nl6i373nsj0" path="res://entities/player/sounds/homewoosh.ogg" id="36_0eo6o"]
 
 [sub_resource type="Curve" id="Curve_we0b7"]
 _limits = [0.0, 1.0, 0.0, 80.0]
@@ -49,37 +59,17 @@ height = 0.5
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sfv1e"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_sfv1e"]
-radius = 0.12
+radius = 0.15
+
+[sub_resource type="Curve" id="Curve_2soq1"]
+_limits = [0.0, 20.0, 0.0, 7.0]
+_data = [Vector2(0.33541667, 0), 0.0, 0.0, 0, 0, Vector2(1.0069324, 1.4522285), 0.0, 0.0, 0, 0, Vector2(7, 20), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="Curve" id="Curve_221hk"]
 _limits = [1.0, 1.3832062, -101.5, 30.0]
 _data = [Vector2(-101.5, 1.3832062), 0.0, 0.0, 0, 0, Vector2(-73.76172, 1.3304235), -0.00606325, -0.00606325, 0, 0, Vector2(-60.406254, 1.1397543), -0.010266467, -0.010266467, 0, 0, Vector2(-46.36589, 1.0416468), -0.004897253, -0.004897253, 0, 0, Vector2(-23.197922, 1), 0.0, 0.0, 0, 0, Vector2(-5.1822968, 1.0598149), 0.005637614, 0.005637614, 0, 0, Vector2(30, 1.3304235), 0.008580766, 0.0, 0, 0]
 point_count = 7
-
-[sub_resource type="Curve" id="Curve_wuv6x"]
-_limits = [0.0, 1.0, 0.0, 6.28]
-_data = [Vector2(0, 0.7), 0.0, 0.0, 0, 0, Vector2(1.8840001, 0.7), 0.0, 0.0, 0, 0, Vector2(3.14, 0.7), 0.0, 0.0, 0, 0, Vector2(5.024, 0.7), 0.0, 0.0, 0, 0, Vector2(6.28, 0.7), 0.0, 0.0, 0, 0]
-point_count = 5
-
-[sub_resource type="Curve" id="Curve_gt4e4"]
-_limits = [0.0, 1.0, -100.0, 10.0]
-_data = [Vector2(-100, 1), 0.0, 0.0, 0, 0, Vector2(-25.64103, 0.25532866), -0.012864758, -0.012864758, 0, 0, Vector2(-3.5897446, 0), 0.0, 0.0, 0, 0, Vector2(10, 0.08214927), 0.0, 0.0, 0, 0]
-point_count = 4
-
-[sub_resource type="Curve" id="Curve_qpopc"]
-_limits = [0.5, 2.0, 0.0, 6.28]
-_data = [Vector2(0, 1.0066351), 0.0, 0.0, 0, 0, Vector2(1.580979, 1.5325341), 0.0, 0.0, 0, 0, Vector2(3.1326804, 0.99828756), 0.0, 0.0, 0, 0, Vector2(4.684382, 1.5074912), 0.0, 0.0, 0, 0, Vector2(6.28, 1.031678), 0.0, 0.0, 0, 0]
-point_count = 5
-
-[sub_resource type="Curve" id="Curve_wq0jh"]
-_limits = [0.0, 8.0, -100.0, 15.0]
-_data = [Vector2(-100, 7.8152747), 0.0, 0.0, 0, 0, Vector2(-41.29371, 4.582593), -0.032301698, -0.032301698, 0, 0, Vector2(-1.0839157, 1.1879282), 0.0, 0.0, 0, 0, Vector2(15, 2.718322), 0.0, 0.0, 0, 0]
-point_count = 4
-
-[sub_resource type="Curve" id="Curve_24ehl"]
-_limits = [0.0, 39.117455, -100.0, 15.0]
-_data = [Vector2(-100, 20.149313), 0.0, 0.0, 0, 0, Vector2(-29.230774, 12.471729), -0.3254626, -0.3254626, 0, 0, Vector2(-6.9813538, 3.794632), 0.0, 0.0, 0, 0, Vector2(15, 11.342674), 0.0, 0.0, 0, 0]
-point_count = 4
 
 [sub_resource type="Curve" id="Curve_ghoj8"]
 _limits = [0.0, 1.0, 0.0, 80.0]
@@ -133,6 +123,41 @@ shading_mode = 2
 material = SubResource("StandardMaterial3D_24ehl")
 size = Vector3(0.25, 0.25, 0.25)
 
+[sub_resource type="Resource" id="Resource_24ehl"]
+script = ExtResource("14_gt4e4")
+metadata/_custom_type_script = "uid://hrwhd52e5mkq"
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_wq0jh"]
+radius = 0.99248755
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_24ehl"]
+radius = 35.0
+
+[sub_resource type="Curve" id="Curve_wuv6x"]
+_limits = [0.0, 1.0, 0.0, 6.28]
+_data = [Vector2(0, 0.7), 0.0, 0.0, 0, 0, Vector2(1.8840001, 0.7), 0.0, 0.0, 0, 0, Vector2(3.14, 0.7), 0.0, 0.0, 0, 0, Vector2(5.024, 0.7), 0.0, 0.0, 0, 0, Vector2(6.28, 0.7), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="Curve" id="Curve_gt4e4"]
+_limits = [0.0, 1.0, -100.0, 10.0]
+_data = [Vector2(-100, 1), 0.0, 0.0, 0, 0, Vector2(-25.64103, 0.25532866), -0.012864758, -0.012864758, 0, 0, Vector2(-3.5897446, 0), 0.0, 0.0, 0, 0, Vector2(10, 0.08214927), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_qpopc"]
+_limits = [0.5, 2.0, 0.0, 6.28]
+_data = [Vector2(0, 1.0066351), 0.0, 0.0, 0, 0, Vector2(1.580979, 1.5325341), 0.0, 0.0, 0, 0, Vector2(3.1326804, 0.99828756), 0.0, 0.0, 0, 0, Vector2(4.684382, 1.5074912), 0.0, 0.0, 0, 0, Vector2(6.28, 1.031678), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="Curve" id="Curve_wq0jh"]
+_limits = [0.0, 8.0, -100.0, 15.0]
+_data = [Vector2(-100, 7.8152747), 0.0, 0.0, 0, 0, Vector2(-41.29371, 4.582593), -0.032301698, -0.032301698, 0, 0, Vector2(-1.0839157, 1.1879282), 0.0, 0.0, 0, 0, Vector2(15, 2.718322), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_24ehl"]
+_limits = [0.0, 39.117455, -100.0, 15.0]
+_data = [Vector2(-100, 20.149313), 0.0, 0.0, 0, 0, Vector2(-29.230774, 12.471729), -0.3254626, -0.3254626, 0, 0, Vector2(-6.9813538, 3.794632), 0.0, 0.0, 0, 0, Vector2(15, 11.342674), 0.0, 0.0, 0, 0]
+point_count = 4
+
 [sub_resource type="Curve" id="Curve_7thud"]
 _limits = [0.0, 30.0, 0.0, 80.0]
 _data = [Vector2(0, 2.4906235), 0.0, 0.0, 0, 0, Vector2(50, 5.367932), 0.0, 0.0, 0, 0, Vector2(80, 30), 2.2373, 0.0, 0, 0]
@@ -143,7 +168,17 @@ _limits = [0.5, 1.2, 0.0, 50.0]
 _data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(50, 0.8911985), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[node name="Player" type="CharacterBody3D" unique_id=845295137 node_paths=PackedStringArray("camera", "walk_particles", "mesh", "light", "light_sound", "state_machine", "rot_node")]
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_vewsg"]
+random_pitch = 1.1646663
+streams_count = 1
+stream_0/stream = ExtResource("34_8q4fm")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_np63p"]
+random_pitch = 1.197617
+streams_count = 1
+stream_0/stream = ExtResource("36_0eo6o")
+
+[node name="Player" type="CharacterBody3D" unique_id=845295137 node_paths=PackedStringArray("camera", "walk_particles", "mesh", "light", "light_sound", "enemy_detection_area", "hitbox", "hurtbox", "home_timer", "ground_cast", "state_machine", "rot_node", "gravity_change_area")]
 collision_layer = 4
 script = ExtResource("1_abrql")
 camera = NodePath("RotNode/RollNode/CameraArm/Camera")
@@ -151,12 +186,22 @@ walk_particles = NodePath("Components/GPUParticles3D")
 mesh = NodePath("Node3D/RotationRoot/Mesh")
 light = NodePath("OmniLight3D")
 light_sound = NodePath("Sounds/Light")
+enemy_detection_area = NodePath("Components/EnemyDetectionArea")
+hitbox = NodePath("Components/BasicHitBox3D")
+hurtbox = NodePath("Components/HurtBox3D")
+home_timer = NodePath("Components/StateMachine/Home/HomeTimer")
+ground_cast = NodePath("Components/GroundCast")
 particle_ratio_curve = SubResource("Curve_we0b7")
-stop_friction = 50.0
+move_speed = 30.0
+move_accel_start = 100.0
+min_drift_speed = 25.0
+drift_speed = 65.0
+float_speed = 10.0
+float_accel = 20.0
 state_machine = NodePath("Components/StateMachine")
 rot_node = NodePath("PanNode")
+gravity_change_area = NodePath("Components/GravChangeDetect")
 jump_state = SubResource("Resource_wuv6x")
-max_ground_angle = 0.785
 snap_height = 1.0
 
 [node name="Node3D" type="Node3D" parent="." unique_id=932722891]
@@ -191,11 +236,11 @@ top_level = true
 [node name="RollNode" type="Node3D" parent="RotNode" unique_id=514414968]
 
 [node name="CameraArm" type="SpringArm3D" parent="RotNode/RollNode" unique_id=843800962]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1587491, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 shape = SubResource("SphereShape3D_sfv1e")
-spring_length = 2.6
+spring_length = 10.0
 
-[node name="Camera" type="Camera3D" parent="RotNode/RollNode/CameraArm" unique_id=1121983788 node_paths=PackedStringArray("pan_node", "roll_node", "arm", "rot_node", "player")]
+[node name="Camera" type="Camera3D" parent="RotNode/RollNode/CameraArm" unique_id=1121983788 node_paths=PackedStringArray("pan_node", "roll_node", "arm", "rot_node", "player", "listener")]
 fov = 90.0
 script = ExtResource("2_sglur")
 pan_node = NodePath("../../../../PanNode")
@@ -204,13 +249,18 @@ arm = NodePath("..")
 rot_node = NodePath("../../..")
 player = NodePath("../../../..")
 zoom = 1.03
-rotation_easing_coefficient = 3.0
+starting_arm_dist = 10.0
+rotation_easing_coefficient = 2.0
+rotation_easing_coefficient_fast = 3.0
+speed_curve = SubResource("Curve_2soq1")
+listener = NodePath("RaytracedAudioListener")
 
 [node name="RaytracedAudioListener" type="AudioListener3D" parent="RotNode/RollNode/CameraArm/Camera" unique_id=173598494 node_paths=PackedStringArray("ray_owner")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.302, 0)
 doppler_tracking = 2
+current = true
 script = ExtResource("8_26q78")
-ray_owner = NodePath("..")
+ray_owner = NodePath("../../../../..")
 muffle_enabled = false
 metadata/_custom_type_script = "uid://bjpmu5sklv5h8"
 
@@ -220,30 +270,24 @@ metadata/_custom_type_script = "uid://bjpmu5sklv5h8"
 
 [node name="StateMachine" type="Node" parent="Components" unique_id=2097665541 node_paths=PackedStringArray("initial_state")]
 process_mode = 4
-script = ExtResource("4_bls4j")
+script = ExtResource("7_wuv6x")
 initial_state = NodePath("Idle")
 metadata/_custom_type_script = "uid://dftqo2odm2rkk"
 
-[node name="Idle" type="Node" parent="Components/StateMachine" unique_id=1117563899 node_paths=PackedStringArray("player")]
+[node name="Idle" type="Node" parent="Components/StateMachine" unique_id=1117563899 node_paths=PackedStringArray("mesh", "player")]
 script = ExtResource("5_fkugw")
-friction = 30.0
+mesh = NodePath("../../../Node3D/RotationRoot/Mesh")
 player = NodePath("../../..")
 target_fov = 75.0
 metadata/_custom_type_script = "uid://ci58u4pdehljw"
 
-[node name="Fall" type="Node" parent="Components/StateMachine" unique_id=17624998 node_paths=PackedStringArray("mesh", "rotate_node", "sound", "player")]
+[node name="Fall" type="Node" parent="Components/StateMachine" unique_id=17624998 node_paths=PackedStringArray("manager", "mesh", "player")]
 script = ExtResource("6_8fjmc")
+manager = NodePath("../../MeshSpinManager")
 minimum_jump_timer = 0.0
 mesh = NodePath("../../../Node3D/RotationRoot/Mesh")
 scale_over_curve = SubResource("Curve_221hk")
 coyote_timer = 0.2
-rotate_node = NodePath("../../../Node3D/RotationRoot")
-full_rot_vol_curve = SubResource("Curve_wuv6x")
-vol_over_vel_curve = SubResource("Curve_gt4e4")
-pitch_over_full_rot = SubResource("Curve_qpopc")
-rot_vel_over_vel = SubResource("Curve_wq0jh")
-update_freq_over_vel = SubResource("Curve_24ehl")
-sound = NodePath("../../../Sounds/Swoosh")
 player = NodePath("../../..")
 target_fov = 75.0
 metadata/_custom_type_script = "uid://cdj1tccn5r75l"
@@ -271,6 +315,29 @@ player = NodePath("../../..")
 target_fov = 105.0
 metadata/_custom_type_script = "uid://bot4ypakil8g"
 
+[node name="Home" type="Node" parent="Components/StateMachine" unique_id=1496672963 node_paths=PackedStringArray("hitbox", "manager", "mesh", "home_timer", "sound", "player")]
+script = ExtResource("13_gt4e4")
+hitbox = NodePath("../../BasicHitBox3D")
+manager = NodePath("../../MeshSpinManager")
+mesh = NodePath("../../../Node3D/RotationRoot/Mesh")
+home_timer = NodePath("HomeTimer")
+sound = NodePath("../../../Sounds/HomeWoosh")
+player = NodePath("../../..")
+target_fov = 105.0
+metadata/_custom_type_script = "uid://cuvxgg238p055"
+
+[node name="HomeTimer" type="Timer" parent="Components/StateMachine/Home" unique_id=1797621718]
+process_mode = 1
+wait_time = 0.00999999999999999
+one_shot = true
+
+[node name="Float" type="Node" parent="Components/StateMachine" unique_id=272162128 node_paths=PackedStringArray("manager", "jump_sound", "player")]
+script = ExtResource("14_8q4fm")
+manager = NodePath("../../MeshSpinManager")
+jump_sound = NodePath("../../../Sounds/SuperJump")
+player = NodePath("../../..")
+metadata/_custom_type_script = "uid://be6h3bib6psij"
+
 [node name="GPUParticles3D" type="GPUParticles3D" parent="Components" unique_id=32383277]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.85624063, 0)
 amount = 100
@@ -279,15 +346,75 @@ randomness = 0.11
 process_material = SubResource("ParticleProcessMaterial_we0b7")
 draw_pass_1 = SubResource("BoxMesh_we0b7")
 
-[node name="RayCast3D" type="RayCast3D" parent="Components" unique_id=1225709947]
-target_position = Vector3(0, -2.37, 0)
+[node name="BasicHitBox3D" type="Area3D" parent="Components" unique_id=205091880]
+collision_layer = 4
+collision_mask = 8
+monitorable = false
+script = ExtResource("13_wq0jh")
+ignore_collisions = true
+actions = Array[ExtResource("14_gt4e4")]([SubResource("Resource_24ehl")])
+metadata/_custom_type_script = "uid://dl46g2gg100af"
 
-[node name="Sounds" type="Node3D" parent="." unique_id=755281305 node_paths=PackedStringArray("player", "footstep", "impact", "jump", "boom")]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Components/BasicHitBox3D" unique_id=267535566]
+shape = SubResource("SphereShape3D_wq0jh")
+
+[node name="EnemyDetectionArea" type="Area3D" parent="Components" unique_id=1339166316]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Components/EnemyDetectionArea" unique_id=1324400885]
+shape = SubResource("SphereShape3D_24ehl")
+
+[node name="HurtBox3D" type="Area3D" parent="Components" unique_id=1423652031 node_paths=PackedStringArray("health")]
+collision_layer = 8
+collision_mask = 4
+script = ExtResource("16_bwdx1")
+health = NodePath("../Health")
+metadata/_custom_type_script = "uid://df8tt6exgnci5"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Components/HurtBox3D" unique_id=146891832]
+shape = SubResource("SphereShape3D_wq0jh")
+
+[node name="Health" type="Node" parent="Components" unique_id=1231985550]
+script = ExtResource("17_vewsg")
+current = 5
+max = 5
+metadata/_custom_type_script = "uid://dr8bvnfebp76"
+
+[node name="MeshSpinManager" type="Node" parent="Components" unique_id=728867185 node_paths=PackedStringArray("player", "mesh", "sound")]
+script = ExtResource("18_vewsg")
+player = NodePath("../..")
+mesh = NodePath("../../Node3D/RotationRoot/Mesh")
+full_rot_vol_curve = SubResource("Curve_wuv6x")
+vol_over_vel_curve = SubResource("Curve_gt4e4")
+pitch_over_full_rot = SubResource("Curve_qpopc")
+rot_vel_over_vel = SubResource("Curve_wq0jh")
+update_freq_over_vel = SubResource("Curve_24ehl")
+sound = NodePath("../../Sounds/Swoosh")
+
+[node name="DashTimer" type="Timer" parent="Components" unique_id=310512524]
+wait_time = 0.5
+one_shot = true
+
+[node name="GroundCast" type="RayCast3D" parent="Components" unique_id=150970807]
+target_position = Vector3(0, -30, 0)
+hit_back_faces = false
+
+[node name="GravChangeDetect" type="Area3D" parent="Components" unique_id=1761375911]
+collision_layer = 0
+collision_mask = 128
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Components/GravChangeDetect" unique_id=1012863124]
+shape = SubResource("SphereShape3D_wq0jh")
+
+[node name="Sounds" type="Node3D" parent="." unique_id=755281305 node_paths=PackedStringArray("player", "hitbox", "footstep", "impact", "hit", "jump", "boom")]
 script = ExtResource("9_7thud")
 player = NodePath("..")
+hitbox = NodePath("../Components/BasicHitBox3D")
 d_to_sound_over_velocity = SubResource("Curve_7thud")
 footstep = NodePath("Slide")
 impact = NodePath("Fall")
+hit = NodePath("Hit")
 jump = NodePath("Jump")
 boom = NodePath("Boom")
 impact_over_velocity = SubResource("Curve_50fht")
@@ -295,7 +422,9 @@ impact_over_velocity = SubResource("Curve_50fht")
 [node name="Slide" type="AudioStreamPlayer3D" parent="Sounds" unique_id=744881662]
 stream = ExtResource("9_wvtmh")
 volume_db = 8.353
+unit_size = 21.85
 max_polyphony = 32
+doppler_tracking = 2
 script = ExtResource("9_bectd")
 metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 
@@ -309,56 +438,94 @@ hard = ExtResource("15_mtric")
 
 [node name="LightWoosh" type="AudioStreamPlayer3D" parent="Sounds/Winds" unique_id=258018425]
 stream = ExtResource("13_j3ovn")
+unit_size = 21.85
 script = ExtResource("9_bectd")
 metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 
 [node name="MediumWoosh" type="AudioStreamPlayer3D" parent="Sounds/Winds" unique_id=1385071463]
 stream = ExtResource("14_afbqv")
+unit_size = 21.85
 script = ExtResource("9_bectd")
 metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 
 [node name="HardWoosh" type="AudioStreamPlayer3D" parent="Sounds/Winds" unique_id=1119691567]
 stream = ExtResource("15_gx6sm")
+unit_size = 21.85
 script = ExtResource("9_bectd")
 metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 
 [node name="Skid" type="AudioStreamPlayer3D" parent="Sounds" unique_id=73774643]
 stream = ExtResource("21_eyb6c")
-volume_db = -9.275
+volume_db = -16.868
+unit_size = 27.61
+doppler_tracking = 2
 script = ExtResource("9_bectd")
 metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 
 [node name="Fall" type="AudioStreamPlayer3D" parent="Sounds" unique_id=912666715]
 stream = ExtResource("23_ghoj8")
 volume_db = -6.432
+unit_size = 44.88
 pitch_scale = 1.86
 max_polyphony = 30
+doppler_tracking = 2
 script = ExtResource("9_bectd")
 metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 
 [node name="Jump" type="AudioStreamPlayer3D" parent="Sounds" unique_id=2053541785]
 stream = ExtResource("23_ghoj8")
 volume_db = -6.432
+unit_size = 44.88
 pitch_scale = 1.09
 max_polyphony = 30
+doppler_tracking = 2
 script = ExtResource("9_bectd")
 metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 
 [node name="Light" type="AudioStreamPlayer3D" parent="Sounds" unique_id=1471468286]
 stream = ExtResource("24_t1t22")
 volume_db = 6.432
-unit_size = 23.45
+unit_size = 44.88
+doppler_tracking = 2
 script = ExtResource("9_bectd")
 metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 
 [node name="Boom" type="AudioStreamPlayer3D" parent="Sounds" unique_id=504564816]
 stream = ExtResource("26_wuv6x")
-unit_size = 23.6
+unit_size = 44.88
+doppler_tracking = 2
 script = ExtResource("9_bectd")
 metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 
 [node name="Swoosh" type="AudioStreamPlayer3D" parent="Sounds" unique_id=789387964]
 stream = ExtResource("15_gx6sm")
+doppler_tracking = 2
+script = ExtResource("9_bectd")
+metadata/_custom_type_script = "uid://dkb8ltjc6067n"
+
+[node name="Hit" type="AudioStreamPlayer3D" parent="Sounds" unique_id=1141107490]
+stream = SubResource("AudioStreamRandomizer_vewsg")
+attenuation_model = 3
+unit_size = 44.88
+max_polyphony = 17
+doppler_tracking = 2
+script = ExtResource("9_bectd")
+metadata/_custom_type_script = "uid://dkb8ltjc6067n"
+
+[node name="SuperJump" type="AudioStreamPlayer3D" parent="Sounds" unique_id=928157309]
+stream = ExtResource("35_np63p")
+volume_db = 12.16
+unit_size = 44.76
+pitch_scale = 2.0
+max_polyphony = 21
+script = ExtResource("9_bectd")
+metadata/_custom_type_script = "uid://dkb8ltjc6067n"
+
+[node name="HomeWoosh" type="AudioStreamPlayer3D" parent="Sounds" unique_id=1031042973]
+stream = SubResource("AudioStreamRandomizer_np63p")
+volume_db = 22.4
+pitch_scale = 1.48
+max_polyphony = 14
 script = ExtResource("9_bectd")
 metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 
@@ -366,3 +533,5 @@ metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 visible = false
 light_energy = 3.819
 omni_range = 7.756815
+
+[node name="FmodListener3D" type="FmodListener3D" parent="." unique_id=1817749627]

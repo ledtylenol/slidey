@@ -9,7 +9,10 @@
 [ext_resource type="AudioStream" uid="uid://dd172h8l6rpxb" path="res://entities/player/sounds/hardwoosh.mp3" id="4_dwbse"]
 [ext_resource type="Texture2D" uid="uid://dr8mm482llyap" path="res://special/NightSkyHDRI003_1K_TONEMAPPED.jpg" id="6_ioo17"]
 [ext_resource type="Script" uid="uid://cv7erkggx0n7o" path="res://special/coin_manager.gd" id="8_gbfbk"]
+[ext_resource type="Script" uid="uid://bywogwv8f0cbj" path="res://special/target_root.gd" id="10_k3n1d"]
 [ext_resource type="Script" uid="uid://b1qbv1s5568fo" path="res://special/command_manager.gd" id="10_wse8f"]
+[ext_resource type="AudioStream" uid="uid://cjstm1ytfiix8" path="res://entities/player/sounds/light.tres" id="11_2o6r5"]
+[ext_resource type="PackedScene" uid="uid://cammud6vgxmby" path="res://entities/stub/stub.tscn" id="11_ic0uy"]
 
 [sub_resource type="Curve" id="Curve_dwbse"]
 _limits = [0.5, 2.0, 0.0, 1.0]
@@ -43,16 +46,21 @@ point_count = 2
 panorama = ExtResource("6_ioo17")
 filter = false
 
-[sub_resource type="Sky" id="Sky_wse8f"]
+[sub_resource type="Sky" id="Sky_ic0uy"]
 sky_material = SubResource("PanoramaSkyMaterial_wse8f")
 
 [sub_resource type="Environment" id="Environment_036b0"]
 background_mode = 2
-sky = SubResource("Sky_wse8f")
+sky = SubResource("Sky_ic0uy")
 ambient_light_source = 3
 reflected_light_source = 1
 tonemap_mode = 2
 glow_enabled = true
+
+[sub_resource type="Curve" id="Curve_2o6r5"]
+_limits = [0.0, 1.0, 0.0, 35.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(6.744186, 1), 0.0, 0.0, 0, 0, Vector2(21.744186, 0.84984815), -0.019822715, -0.019822715, 0, 0, Vector2(35, 0.19392109), 0.0, 0.0, 0, 0]
+point_count = 4
 
 [node name="Game" type="Node" unique_id=490218917 node_paths=PackedStringArray("world_3d", "coin_manager", "ui", "player", "sun", "environment", "woosh")]
 script = ExtResource("1_aqk2v")
@@ -77,6 +85,24 @@ level = NodePath("Level")
 
 [node name="Level" parent="World" unique_id=1036663807 instance=ExtResource("3_036b0")]
 
+[node name="Stub" parent="World/Level" unique_id=1012144446 instance=ExtResource("11_ic0uy")]
+transform = Transform3D(1, 0, 0, 0, -0.94832367, -0.31730458, 0, 0.31730458, -0.94832367, 27.20938, 57.337326, 33.624866)
+
+[node name="Stub3" parent="World/Level" unique_id=103271734 instance=ExtResource("11_ic0uy")]
+transform = Transform3D(1, 0, 0, 0, -0.87881714, -0.47715873, 0, 0.47715873, -0.87881714, 63.23153, 57.337326, 47.73358)
+
+[node name="Stub4" parent="World/Level" unique_id=1673850382 instance=ExtResource("11_ic0uy")]
+transform = Transform3D(0.99999994, 0, 0, 0, -0.86339545, 0.5045275, 0, -0.5045275, -0.86339545, 91.76246, 51.66424, 59.57294)
+
+[node name="Stub2" parent="World/Level" unique_id=439460152 instance=ExtResource("11_ic0uy")]
+transform = Transform3D(1, 0, 0, 0, -0.96363044, 0.26723835, 0, -0.26723835, -0.96363044, 43.9585, 57.337326, 40.157433)
+
+[node name="Stub5" parent="World/Level" unique_id=1304328825 instance=ExtResource("11_ic0uy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -50.718666, -37.63622, -25.494879)
+
+[node name="Stub6" parent="World/Level" unique_id=1940893642 instance=ExtResource("11_ic0uy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -105.59146, -47.264534, -25.494879)
+
 [node name="Woosh" type="AudioStreamPlayer" parent="World" unique_id=1458501079]
 stream = ExtResource("4_dwbse")
 bus = &"RaytracedAmbient"
@@ -89,7 +115,8 @@ environment = SubResource("Environment_036b0")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="World" unique_id=937621591]
 transform = Transform3D(0.67574465, -0.66912836, -0.30925152, 0.6909041, 0.4286928, 0.58212894, -0.2569451, -0.60703367, 0.7519903, 0, 0, 0)
-light_angular_distance = 0.5
+visible = false
+light_bake_mode = 1
 shadow_enabled = true
 directional_shadow_mode = 0
 directional_shadow_fade_start = 1.0
@@ -110,81 +137,6 @@ speed_label = NodePath("MarginContainer/VBoxContainer/Speed Label")
 coin_label = NodePath("MarginContainer/VBoxContainer/HBoxContainer/Control/Coin Label")
 player = NodePath("../World/Player")
 coin_manager = NodePath("../CoinManager")
-
-[node name="TabContainer" type="TabContainer" parent="UI" unique_id=908940474]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-current_tab = 0
-
-[node name="Settings" type="MarginContainer" parent="UI/TabContainer" unique_id=1617367615]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-metadata/_tab_index = 0
-
-[node name="Settings" type="TabContainer" parent="UI/TabContainer/Settings" unique_id=1092635142]
-layout_mode = 2
-current_tab = 0
-
-[node name="Audio2" type="MarginContainer" parent="UI/TabContainer/Settings/Settings" unique_id=1078796614]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-metadata/_tab_index = 0
-
-[node name="Video" type="VBoxContainer" parent="UI/TabContainer/Settings/Settings/Audio2" unique_id=1595732566]
-visible = false
-layout_mode = 2
-
-[node name="Audio2" type="PanelContainer" parent="UI/TabContainer/Settings/Settings/Audio2" unique_id=945517504]
-layout_mode = 2
-
-[node name="Audio" type="VBoxContainer" parent="UI/TabContainer/Settings/Settings/Audio2/Audio2" unique_id=333647781]
-layout_mode = 2
-
-[node name="SplitContainer" type="HBoxContainer" parent="UI/TabContainer/Settings/Settings/Audio2/Audio2/Audio" unique_id=2105992139]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="UI/TabContainer/Settings/Settings/Audio2/Audio2/Audio/SplitContainer" unique_id=460573763]
-layout_mode = 2
-text = "SFX:"
-
-[node name="HSlider" type="HSlider" parent="UI/TabContainer/Settings/Settings/Audio2/Audio2/Audio/SplitContainer" unique_id=1756286187]
-layout_mode = 2
-size_flags_horizontal = 3
-max_value = 1.0
-step = 0.01
-
-[node name="VSeparator" type="VSeparator" parent="UI/TabContainer/Settings/Settings/Audio2/Audio2/Audio/SplitContainer" unique_id=413924911]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 3.68
-
-[node name="SplitContainer2" type="HBoxContainer" parent="UI/TabContainer/Settings/Settings/Audio2/Audio2/Audio" unique_id=427445246]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="UI/TabContainer/Settings/Settings/Audio2/Audio2/Audio/SplitContainer2" unique_id=1351308537]
-layout_mode = 2
-text = "Volume: "
-
-[node name="HSlider" type="HSlider" parent="UI/TabContainer/Settings/Settings/Audio2/Audio2/Audio/SplitContainer2" unique_id=875769246]
-layout_mode = 2
-size_flags_horizontal = 3
-max_value = 1.0
-step = 0.01
-
-[node name="VSeparator" type="VSeparator" parent="UI/TabContainer/Settings/Settings/Audio2/Audio2/Audio/SplitContainer2" unique_id=277161635]
-layout_mode = 2
-size_flags_horizontal = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="UI" unique_id=590095518]
 layout_mode = 0
@@ -221,6 +173,67 @@ layout_mode = 2
 size_flags_horizontal = 8
 text = " coins"
 
+[node name="TargetRoot" type="Control" parent="UI" unique_id=2108322659 node_paths=PackedStringArray("player", "sound")]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1e-05, 1e-05)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+offset_transform_enabled = true
+mouse_filter = 2
+mouse_behavior_recursive = 1
+script = ExtResource("10_k3n1d")
+player = NodePath("../../World/Player")
+scale_over_dist = SubResource("Curve_2o6r5")
+sound = NodePath("Light")
+
+[node name="ColorRect" type="ColorRect" parent="UI/TargetRoot" unique_id=1701965840]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+offset_transform_enabled = true
+offset_transform_position = Vector2(-50, 0)
+offset_transform_position_ratio = Vector2(0, 0.5)
+
+[node name="ColorRect2" type="ColorRect" parent="UI/TargetRoot" unique_id=233827433]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 20.0
+offset_transform_enabled = true
+offset_transform_position = Vector2(50, 0)
+offset_transform_position_ratio = Vector2(0, 0.5)
+
+[node name="ColorRect3" type="ColorRect" parent="UI/TargetRoot" unique_id=622650754]
+layout_mode = 0
+offset_right = 20.0
+offset_bottom = 40.0
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, 50)
+offset_transform_position_ratio = Vector2(0.5, 0)
+
+[node name="ColorRect4" type="ColorRect" parent="UI/TargetRoot" unique_id=943838076]
+layout_mode = 0
+offset_right = 20.0
+offset_bottom = 40.0
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, -50)
+offset_transform_position_ratio = Vector2(0.5, 0)
+
+[node name="Light" type="AudioStreamPlayer" parent="UI/TargetRoot" unique_id=2129591287]
+stream = ExtResource("11_2o6r5")
+volume_db = -3.302
+max_polyphony = 19
+
 [node name="CoinManager" type="Node" parent="." unique_id=1190794270]
 script = ExtResource("8_gbfbk")
 
@@ -228,3 +241,10 @@ script = ExtResource("8_gbfbk")
 process_mode = 3
 script = ExtResource("10_wse8f")
 game = NodePath("..")
+
+[node name="Music" type="FmodEventEmitter3D" parent="." unique_id=1725136321]
+event_name = "event:/Interpolarity"
+event_guid = "{c3a6bd19-4736-444e-ba86-60b836bb6316}"
+attached = false
+autoplay = true
+preload_event = false

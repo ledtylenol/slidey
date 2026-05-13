@@ -17,10 +17,13 @@ func tick(delta: float) -> void:
 	t += delta
 	var vel := velocity.slide(up).length()
 	if t > time_over_speed.sample(vel):
-		var ghost = Ghost.new(mesh, 1.0, 0.7)
+		var ghost = Ghost.new(mesh, 1.0, 0.7, 0.05)
 		get_tree().current_scene.world_3d.add_child(ghost)
 		t = 0.0
 func physics_tick(delta: float) -> void:
+	player.check_grounded(delta)
+	player.check_inputs()
+	player.rotate_to_normal(delta)
 	if grounded or player.was_grounded:
 		if player.direction and player.direction.dot(velocity) > 0:
 			transition("move")
@@ -35,9 +38,7 @@ func physics_tick(delta: float) -> void:
 	var friction := player.stop_friction
 	if velocity.slide(up).length() > player.min_drift_speed:
 		friction = player.stop_friction_over
-		print("A")
-	else:
-		print("B")
-	velocity = velocity.project(up) + velocity.slide(up).move_toward(Vector3.ZERO, delta * friction)
-	player.jump()
+
+	velocity = velocity.slide(up).move_toward(Vector3.ZERO, delta * friction)
+	#player.jump()
 	player.move(delta)

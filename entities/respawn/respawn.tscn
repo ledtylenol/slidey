@@ -41,7 +41,7 @@ metadata/_custom_type_script = "uid://c4t3ypbomgddh"
 
 [node name="RespawnSong" type="AudioStreamPlayer3D" parent="." unique_id=72821614]
 stream = ExtResource("6_0p13f")
-unit_size = 21.58
+unit_size = 2.55
 script = ExtResource("6_dtt77")
 metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 

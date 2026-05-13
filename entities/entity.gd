@@ -4,6 +4,7 @@ class_name Entity
 @export_category("Components")
 @export var state_machine: StateMachine
 @export var rot_node: Node3D
+@export var gravity_change_area: Area3D
 @export_category("Stats")
 @export var jump_state: JumpState
 @export var delta_iterations := 5
@@ -14,6 +15,7 @@ class_name Entity
 var up := Vector3.UP
 var old_up := Vector3.UP
 var velocity := Vector3.ZERO
+var horizontal_speed := 0.0
 var grounded := false
 var direction := Vector3.ZERO
 var jumped := false
@@ -29,6 +31,11 @@ signal started_moving()
 signal stopped_moving()
 signal just_jumped()
 
+func _ready() -> void:
+	if gravity_change_area:
+		gravity_change_area.area_entered.connect(on_grav_area_entered)
+func on_grav_area_entered(area: Area3D) -> void:
+	up = area.global_basis.y
 func _process(delta: float) -> void:
 	state_machine.tick(delta)
 func jump() -> void:
@@ -36,40 +43,46 @@ func jump() -> void:
 	velocity = velocity.slide(up) + up * jump_state.jump_velocity
 	jumped = true
 	just_jumped.emit()
+
+func air_jump(mod := 1.5) -> void:
+	velocity = velocity.slide(up) + up * jump_state.jump_velocity * mod
+	jumped = true
+	just_jumped.emit()
 func check_grounded(delta: float) -> void:
 	old_up = up
 	var col = KinematicCollision3D.new()
 	var cold = KinematicCollision3D.new()
-	var is_colliding := test_move(global_transform, (velocity + up * g_gravity() * delta) * delta, col, 0.005, true)
-	var is_colliding_down := test_move(global_transform, (up * g_gravity() * delta) * delta, cold, 0.005, true)
+	var is_colliding := test_move(global_transform, (velocity + up * g_gravity() * delta) * delta, col, 0.005, true, 3)
+	var is_colliding_down := test_move(global_transform, (up * g_gravity() * delta) * delta, cold, 0.005, true, 3)
 	was_grounded = grounded
 	if not is_colliding and current_terrain and current_terrain.override_up:
-		is_colliding = test_move(global_transform, (velocity + current_up * g_gravity() * delta) * delta , col, 0.005, true)
+		is_colliding = test_move(global_transform, (velocity + current_up * g_gravity() * delta) * delta , col, 0.005, true, 3)
 	if is_colliding or is_colliding_down:
 		col = col if is_colliding else cold
-		var new_up := col.get_normal(0)
-		var terrain := col.get_collider() as Terrain
-		if terrain:
-			current_terrain = terrain
-			if terrain.override_up:
-				current_up = new_up
-			if new_up.angle_to(up) < get_max_angle():
+		for i in col.get_collision_count():
+			var new_up := col.get_normal(i)
+			var terrain := col.get_collider(i) as Terrain
+			if terrain:
+				current_terrain = terrain
+				if terrain.override_up:
+					current_up = new_up
+				if new_up.angle_to(up) < get_max_angle():
+					grounded = true
+					up = new_up
+					return
+				else: 
+					current_terrain = null
+					grounded = false
+			elif new_up.angle_to(up) < get_max_angle():
 				grounded = true
 				up = new_up
-				return
-			else: 
 				current_terrain = null
+				current_up = Vector3.ZERO
+				return
+			else:
+				current_terrain = null
+				current_up = Vector3.ZERO
 				grounded = false
-		elif new_up.angle_to(up) < get_max_angle():
-			grounded = true
-			up = new_up
-			current_terrain = null
-			current_up = Vector3.ZERO
-			return
-		else:
-			current_terrain = null
-			current_up = Vector3.ZERO
-			grounded = false
 	else:
 		grounded = false
 func check_inputs() -> void:
@@ -77,9 +90,9 @@ func check_inputs() -> void:
 	direction = rot_node.global_basis * Vector3(d.x, 0, d.y)
 
 func rotate_to_normal(delta: float) -> void:
-	if up != basis.y:
-		var q := Quaternion(basis.y, up)
-		quaternion =  M.slerpq_normal(quaternion, q * quaternion, delta, 15.0)
+	if not up.is_equal_approx(basis.y):
+		var q := Quaternion(basis.y, up) * quaternion
+		quaternion =  M.slerpq_normal(quaternion, q, delta, 15.0)
 
 func get_max_angle() -> float:
 	return max_ground_angle if not current_terrain or not current_terrain.override_angle else current_terrain.max_angle
@@ -104,15 +117,15 @@ func g_gravity() -> float:
 
 func apply_snap(_delta: float) -> void:
 	var col = KinematicCollision3D.new()
-	var collided := test_move(transform, -basis.y * snap_height, col, 0.001, true, 1)
+	var collided := test_move(transform, -basis.y * snap_height, col, 0.001, true, 5)
 	if collided:
-		var angle := col.get_normal().angle_to(up)
-		if angle <= 0.1 or angle >= get_max_angle(): return
-		print(col.get_normal().dot(up))
-		#position += col.get_travel()
-		up = col.get_normal()
-		var q := Quaternion(basis.y, up)
-		velocity = q * velocity
+		for i in col.get_collision_count():
+			var angle := col.get_normal(i).angle_to(up)
+			if angle <= 0.1 or angle >= get_max_angle(): return
+			#position += col.get_travel()
+			up = col.get_normal(i)
+			var q := Quaternion(basis.y, up)
+			velocity = q * velocity
 func move(delta: float) -> void:
 	var subdelt := delta / delta_iterations
 	for i in delta_iterations:

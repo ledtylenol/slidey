@@ -3,10 +3,11 @@ extends Node3D
 @export var player: Player
 
 var d_travelled := 0.0
+@export var hitbox: HitBox3D
 @export var d_to_sound_over_velocity: Curve
-
 @export var footstep: RaytracedAudioPlayer3D
 @export var impact: RaytracedAudioPlayer3D
+@export var hit: RaytracedAudioPlayer3D
 @export var jump: RaytracedAudioPlayer3D
 @export var boom: RaytracedAudioPlayer3D
 @export var impact_over_velocity: Curve
@@ -14,7 +15,7 @@ func _ready() -> void:
 	player.landed.connect(land)
 	player.just_jumped.connect(jump.play)
 	get_tree().current_scene.just_reset.connect(play_reset)
-
+	hitbox.hurt_box_entered.connect(on_hurtbox_enter)
 func _physics_process(delta: float) -> void:
 	if not player.grounded: return
 	var pl := player.velocity.slide(player.up).length()
@@ -34,3 +35,8 @@ func land(vel: Vector3) -> void:
 
 func play_reset() -> void:
 	boom.play()
+
+func on_hurtbox_enter(hurtbox: HurtBox3D) -> void:
+	if hurtbox == player.hurtbox:
+		return
+	hit.play()

@@ -10,7 +10,7 @@ script_class = ExtResource("2_jp27p")
 classname = "slide_terrain"
 class_properties = Dictionary[String, Variant]({
 "max_angle": 0.0,
-"override_max_angle": false,
+"override_angle": false,
 "override_up": false,
 "sound": ""
 })

@@ -1,8 +1,10 @@
-[gd_resource type="StandardMaterial3D" format=3 uid="uid://d1eecl73uinkw"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://b11js1lbpmtyv"]
 
 [ext_resource type="Texture2D" uid="uid://c7yqvrhifm34p" path="res://tb/textures/CARPET03.png" id="1_5rcwj"]
+[ext_resource type="Shader" uid="uid://4i4ln1sw010w" path="res://tb/mats/vert.gdshader" id="1_u2mkc"]
 
 [resource]
-albedo_texture = ExtResource("1_5rcwj")
-metallic_specular = 0.0
-texture_filter = 2
+render_priority = 0
+shader = ExtResource("1_u2mkc")
+shader_parameter/tex = ExtResource("1_5rcwj")
+shader_parameter/light_steps = 5.0

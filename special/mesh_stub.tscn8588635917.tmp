@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://c77v8tk21wult"]
+
+[ext_resource type="Material" uid="uid://buw7gn58u5vwi" path="res://tb/mats/N006.tres" id="1_fn08x"]
+[ext_resource type="PackedScene" uid="uid://djwbra0hrrfa7" path="res://levels/level2/node_3d.tscn" id="1_rmigg"]
+[ext_resource type="Material" uid="uid://owr5tkwflymx" path="res://tb/mats/PAT0003.tres" id="2_rgbw1"]
+[ext_resource type="Material" uid="uid://b11js1lbpmtyv" path="res://tb/mats/CARPET03.tres" id="3_rgbw1"]
+[ext_resource type="Material" uid="uid://hdcookejey45" path="res://tb/mats/CARPET10.tres" id="4_gmwci"]
+[ext_resource type="Material" uid="uid://b6f4t7yr0ucf" path="res://tb/mats/carpet01.tres" id="5_2f4bk"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_gmwci"]
+material = ExtResource("1_fn08x")
+
+[sub_resource type="BoxMesh" id="BoxMesh_2f4bk"]
+material = ExtResource("2_rgbw1")
+
+[sub_resource type="BoxMesh" id="BoxMesh_rmigg"]
+material = ExtResource("3_rgbw1")
+
+[sub_resource type="BoxMesh" id="BoxMesh_pbv18"]
+material = ExtResource("4_gmwci")
+
+[sub_resource type="BoxMesh" id="BoxMesh_2nbpv"]
+material = ExtResource("5_2f4bk")
+
+[sub_resource type="BoxMesh" id="BoxMesh_qx64t"]
+material = ExtResource("1_fn08x")
+
+[node name="MeshStub" type="Node3D" unique_id=2079271562]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1475282157]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.31617856, 0.19987118, 0.04830742)
+mesh = SubResource("BoxMesh_gmwci")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=762899812]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5902848, 0.2798196, -0.4966638)
+mesh = SubResource("BoxMesh_2f4bk")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="." unique_id=869067443]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.467129, -0.28781462, -0.07602692)
+mesh = SubResource("BoxMesh_rmigg")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="." unique_id=247251085]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.12582111, -0.34377837, 0.28274155)
+mesh = SubResource("BoxMesh_pbv18")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="." unique_id=755867387]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1793189, 0.9593821, -0.4992602)
+mesh = SubResource("BoxMesh_2nbpv")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="." unique_id=2022769220]
+mesh = SubResource("BoxMesh_qx64t")
+
+[node name="Node3D" parent="." unique_id=1457404897 instance=ExtResource("1_rmigg")]
+stub = true

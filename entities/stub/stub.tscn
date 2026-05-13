@@ -1,0 +1,95 @@
+[gd_scene format=3 uid="uid://cammud6vgxmby"]
+
+[ext_resource type="Script" uid="uid://p3gnww2n18b5" path="res://entities/stub/stub.gd" id="1_k3j4g"]
+[ext_resource type="Script" uid="uid://dftqo2odm2rkk" path="res://components/state_machine/state_machine.gd" id="2_bnlhr"]
+[ext_resource type="Script" uid="uid://b3rd7k1j0m6th" path="res://entities/player/jump_state.gd" id="2_havq1"]
+[ext_resource type="Script" uid="uid://cvm82entqa3dy" path="res://entities/stub/states/base.gd" id="4_havq1"]
+[ext_resource type="Script" uid="uid://dyxvt8yarxaff" path="res://addons/health_hitbox_hurtbox/3d/hurt_box_3d/basic_hurt_box_3d.gd" id="5_jc2ah"]
+[ext_resource type="Script" uid="uid://cobp4qehnuq77" path="res://addons/health_hitbox_hurtbox/resources/health_modifier.gd" id="6_bn68m"]
+[ext_resource type="Script" uid="uid://dr8bvnfebp76" path="res://addons/health_hitbox_hurtbox/health/health.gd" id="7_bn68m"]
+[ext_resource type="PackedScene" uid="uid://buejrlf1chi4i" path="res://entities/stub/stub.glb" id="8_1iyv3"]
+[ext_resource type="Script" uid="uid://dkb8ltjc6067n" path="res://addons/raytraced_audio/raytraced_audio_player_3d.gd" id="9_vnt55"]
+[ext_resource type="AudioStream" uid="uid://dwc3ni7qrjhrx" path="res://entities/respawn/bong_001.ogg" id="9_xuvxq"]
+
+[sub_resource type="Resource" id="Resource_w68it"]
+script = ExtResource("2_havq1")
+jump_height = 5.0
+jump_peak_time = 0.4
+jump_descend_time = 0.45
+metadata/_custom_type_script = "uid://b3rd7k1j0m6th"
+
+[sub_resource type="Curve" id="Curve_1iyv3"]
+_limits = [0.0, 3.0, 0.0, 50.0]
+_data = [Vector2(6.9324093, 3), 0.0, 0.0, 0, 0, Vector2(19.064125, 1.1742036), -0.08599866, -0.08599866, 0, 0, Vector2(50, 0.1057325), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_vnt55"]
+_limits = [1.0, 3.0, 0.0, 50.0]
+_data = [Vector2(2.339688, 1.2694268), 0.0, 0.0, 0, 0, Vector2(16.811092, 1.0624204), -0.0020772694, -0.0020772694, 0, 0, Vector2(50, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Resource" id="Resource_xuvxq"]
+script = ExtResource("6_bn68m")
+
+[sub_resource type="Resource" id="Resource_e43ei"]
+script = ExtResource("6_bn68m")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_bn68m"]
+radius = 1.2307826
+
+[node name="Stub" type="CharacterBody3D" unique_id=1012144446 node_paths=PackedStringArray("state_machine", "rot_node")]
+script = ExtResource("1_k3j4g")
+state_machine = NodePath("StateMachine")
+rot_node = NodePath("RotNode")
+jump_state = SubResource("Resource_w68it")
+
+[node name="StateMachine" type="Node" parent="." unique_id=1525206605 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_bnlhr")
+initial_state = NodePath("BaseStubState")
+metadata/_custom_type_script = "uid://dftqo2odm2rkk"
+
+[node name="BaseStubState" type="Node" parent="StateMachine" unique_id=798831832 node_paths=PackedStringArray("model", "ring1", "ring2", "health", "hurtbox", "reform_sound")]
+script = ExtResource("4_havq1")
+model = NodePath("../../stub/Icosphere")
+ring1 = NodePath("../../stub/Icosphere/Torus")
+ring2 = NodePath("../../stub/Icosphere/Torus/Torus_001")
+health = NodePath("../../Health")
+hurtbox = NodePath("../../BasicHurtBox3D")
+spin_over_dist = SubResource("Curve_1iyv3")
+scale_over_dist = SubResource("Curve_vnt55")
+reform_sound = NodePath("../../Boop")
+metadata/_custom_type_script = "uid://cvm82entqa3dy"
+
+[node name="RotNode" type="Node3D" parent="." unique_id=663696252]
+
+[node name="BasicHurtBox3D" type="Area3D" parent="." unique_id=617418876 node_paths=PackedStringArray("health")]
+collision_layer = 8
+collision_mask = 4
+script = ExtResource("5_jc2ah")
+health = NodePath("../Health")
+modifiers = Dictionary[int, ExtResource("6_bn68m")]({
+1: SubResource("Resource_xuvxq"),
+2: SubResource("Resource_e43ei")
+})
+metadata/_custom_type_script = "uid://dyxvt8yarxaff"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BasicHurtBox3D" unique_id=792243309]
+shape = SubResource("SphereShape3D_bn68m")
+
+[node name="Health" type="Node" parent="." unique_id=1513964723]
+script = ExtResource("7_bn68m")
+current = 1
+max = 1
+metadata/_custom_type_script = "uid://dr8bvnfebp76"
+
+[node name="stub" parent="." unique_id=109162418 instance=ExtResource("8_1iyv3")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+
+[node name="Boop" type="AudioStreamPlayer3D" parent="." unique_id=1145729890]
+stream = ExtResource("9_xuvxq")
+unit_size = 56.73
+doppler_tracking = 2
+script = ExtResource("9_vnt55")
+metadata/_custom_type_script = "uid://dkb8ltjc6067n"
+
+[editable path="stub"]

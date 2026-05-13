@@ -39,10 +39,10 @@ materials/extract_format=0
 materials/extract_path="res://tb/mats"
 _subresources={
 "materials": {
-"TreeWood": {
+"N006": {
 "use_external/enabled": true,
-"use_external/fallback_path": "res://tb/mats/TreeWood.tres",
-"use_external/path": "uid://gvvj5a04lgd"
+"use_external/fallback_path": "res://tb/mats/N006.tres",
+"use_external/path": "uid://buw7gn58u5vwi"
 },
 "carpet01": {
 "use_external/enabled": true,
@@ -59,6 +59,26 @@ _subresources={
 "save_to_file/enabled": true,
 "save_to_file/fallback_path": "res://tb/maps/asd.tres",
 "save_to_file/path": "uid://b24po6v5bll3u"
+}
+},
+"nodes": {
+"PATH:Cylinder": {
+"generate/occluder": 1
+},
+"PATH:Terrain": {
+"generate/occluder": 1
+},
+"PATH:Terrain_001": {
+"generate/occluder": 1
+},
+"PATH:Terrain_002": {
+"generate/occluder": 1
+},
+"PATH:Terrain_003": {
+"generate/occluder": 1
+},
+"PATH:Terrain_004": {
+"generate/occluder": 1
 }
 }
 }

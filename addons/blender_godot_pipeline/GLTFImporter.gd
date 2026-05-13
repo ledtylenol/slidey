@@ -84,17 +84,29 @@ func iterate_scene(node, root):
 					col_shape.owner = root
 					for i in node.mesh.get_surface_count():
 						var mat = node.mesh.surface_get_material(i).resource_name
-						print("MATERIAL NAME %s" % mat)
 		else:
 			set_metadata(node, extras)
 func set_metadata(node, extras):
-	for key in extras:
+	for key: String in extras:
 		#print(key + "=" + extras[key])
-		node.set_meta(key, extras[key])
-
+		if node is MeshInstance3D and key.begins_with("instance_"):
+			var param: String = key.trim_prefix("instance_")
+			var val = extras[key]
+			var set_val
+			if val is Array:
+				if val.size() == 4:
+					set_val = Vector4(val[0], val[1], val[2], val[3])
+				elif val.size() == 3:
+					set_val = Vector3(val[0], val[1], val[2])
+			else:
+				set_val = val
+			print("%s %s %s" % [param, set_val, key])
+			node.set_instance_shader_parameter(param, set_val)
+		else:
+			node.set_meta(key, extras[key])
+		
 
 func set_parameters(node, extras):
 	for key in extras:
 		if key == "classname": continue
 		node.set(key, extras[key])
-		prints(key, ":",node.get(key))

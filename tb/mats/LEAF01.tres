@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://bnqxgqk5o8b17"]
+
+[ext_resource type="Shader" uid="uid://b8a050tkgegqu" path="res://tb/mats/LEAF01.gdshader" id="1_mp1rs"]
+[ext_resource type="Texture2D" uid="uid://dh833yt18lmfy" path="res://tb/textures/leaf_alpha.png" id="2_b5dji"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_mp1rs")
+shader_parameter/alpha = ExtResource("2_b5dji")
+shader_parameter/light_steps = 5.0
+shader_parameter/bend_amount = 1.0

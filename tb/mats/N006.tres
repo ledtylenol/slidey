@@ -1,8 +1,10 @@
-[gd_resource type="StandardMaterial3D" format=3 uid="uid://b6kx17djym0dp"]
+[gd_resource type="ShaderMaterial" format=3 uid="uid://buw7gn58u5vwi"]
 
-[ext_resource type="Texture2D" uid="uid://cetwwsfbb6ar7" path="res://tb/textures/N006.jpg" id="1_o4sog"]
+[ext_resource type="Shader" uid="uid://4i4ln1sw010w" path="res://tb/mats/vert.gdshader" id="1_ipk7w"]
+[ext_resource type="Texture2D" uid="uid://cetwwsfbb6ar7" path="res://tb/textures/N006.JPG" id="1_o4sog"]
 
 [resource]
-albedo_texture = ExtResource("1_o4sog")
-metallic_specular = 0.0
-texture_filter = 2
+render_priority = 0
+shader = ExtResource("1_ipk7w")
+shader_parameter/tex = ExtResource("1_o4sog")
+shader_parameter/light_steps = 20.0

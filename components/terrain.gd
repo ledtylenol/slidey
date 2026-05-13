@@ -7,8 +7,7 @@ class_name Terrain
 @export var max_angle := PI/5
 @export var override_up := false
 
-func _func_godot_apply_properties(entity_properties: Dictionary) -> void:
-	for prop in entity_properties.keys():
-		if prop == "classname": continue
-		set(prop, entity_properties[prop])
-		print("applied %s %s" % [prop, entity_properties[prop]])
+func _func_godot_apply_properties(props: Dictionary) -> void:
+	for key in props.keys():
+		if key != "classname":
+			set(key, props[key])

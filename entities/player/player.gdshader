@@ -11,6 +11,8 @@ void vertex() {
 void fragment() {
 	float n = texture(noise, UV + offset).r;
 	ALBEDO = texture(tex, UV).rgb;
+	ALPHA_SCISSOR_THRESHOLD = 0.1;
+	ALPHA = step(n, alpha) ;
 	if (step(n, alpha) == 0.0) discard;
 }
 

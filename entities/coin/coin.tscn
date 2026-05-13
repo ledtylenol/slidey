@@ -31,6 +31,8 @@ shape = SubResource("SphereShape3D_tvniy")
 
 [node name="RaytracedAudioPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1984413806]
 stream = ExtResource("3_sogop")
+volume_db = -8.0
+doppler_tracking = 2
 script = ExtResource("4_5wv18")
 metadata/_custom_type_script = "uid://dkb8ltjc6067n"
 

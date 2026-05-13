@@ -20,7 +20,7 @@ glow_enabled = true
 
 [node name="ShaderCompiler" type="Node3D" unique_id=1928285637]
 script = ExtResource("1_xavic")
-scenes = Array[String](["uid://onugg084mmda", "uid://cso6ftafnp3fo", "uid://bst7wah1ks0xu", "uid://c77v8tk21wult"])
+scenes = Array[String](["uid://onugg084mmda", "uid://cso6ftafnp3fo", "uid://bst7wah1ks0xu", "uid://c77v8tk21wult", "uid://b1w4ismjkvahy"])
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=1653248541]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.265)

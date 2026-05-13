@@ -39,6 +39,7 @@ static func slerpq_normal(input : Quaternion, target : Quaternion, delta: float,
 
 	if is_zero_approx((input - target).length_squared()):
 		return target
+
 	return input.slerp(target, 1.0 - exp(-weight * delta)).normalized()
 static func rand_vec() -> Vector3:
 	return Vector3(randf_range(-1, 1), randf_range(-1,1), randf_range(-1,1)).normalized()
